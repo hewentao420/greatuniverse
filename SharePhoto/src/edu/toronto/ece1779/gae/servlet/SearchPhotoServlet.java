@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.*;
 
-import edu.toronto.ece1779.gae.model.Image;
+import edu.toronto.ece1779.gae.model.Photo;
 
 public class SearchPhotoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,11 +19,11 @@ public class SearchPhotoServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		ClearCache(response);
 
-		ArrayList<Image> list = new ArrayList<Image>();
-		Image user1 = new Image();
+		ArrayList<Photo> list = new ArrayList<Photo>();
+		Photo user1 = new Photo();
 		user1.setImageId(123);
 		user1.setUserId("Jason");
-		user1.setTitle("My picture");
+		user1.setTitle("My photo");
 		user1.setDescription("Nice photo");
 		user1.setWeather("sunny");
 		user1.setTime("morning");
@@ -34,7 +34,7 @@ public class SearchPhotoServlet extends HttpServlet {
 		user1.setUrl_big("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
 		list.add(user1);
 
-		Image user2 = new Image();
+		Photo user2 = new Photo();
 		user2.setImageId(124);
 		user2.setUserId("David");
 		user2.setTitle("My dinner");

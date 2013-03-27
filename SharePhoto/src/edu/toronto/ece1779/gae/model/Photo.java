@@ -1,7 +1,6 @@
 package edu.toronto.ece1779.gae.model;
 
-public class Image {
-	
+public class Photo {
 	private int imageId;
 	private String userId;
 	private String title;
@@ -14,7 +13,7 @@ public class Image {
 	private String url_small;
 	private String url_big;
 	
-	public Image() {
+	public Photo() {
 	}
 
 	public int getImageId() {
@@ -104,6 +103,5 @@ public class Image {
 	public void setUrl_big(String url_big) {
 		this.url_big = url_big;
 	}
-	
 	
 }
