@@ -23,7 +23,7 @@ public class SearchPhotoServlet extends HttpServlet {
 		Image user1 = new Image();
 		user1.setImageId(123);
 		user1.setUserId("Jason");
-		user1.setTitle("My profile");
+		user1.setTitle("My picture");
 		user1.setDescription("Nice photo");
 		user1.setWeather("sunny");
 		user1.setTime("morning");
