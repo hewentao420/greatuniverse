@@ -9,11 +9,70 @@
   <script type="text/javascript" src="script/ajaxRequest.js"></script>
   <script src="js/jquery-1.9.1.js" type="text/javascript"></script>
   <script src="js/infobox.js" type="text/javascript"></script>
+  <style type="text/css">
+  #main
+  {
+  	height:800px;
+  	width:1200px;
+  	margin-left:auto;
+  	margin-right:auto;
+  }
+  
+  #map
+  {
+  	width:1000px;
+  	height:800px;
+  	float:left;
+  }
+  
+  #filters_box
+  {
+  	width:200px;
+  	float:right;
+  }
+  
+  .select_weather
+  {
+  	color:red;
+  }
+  
+  .select_time
+  {
+  	color:red;
+  }
+  </style>
 </head>
 <body>
-	<div id="map" style="width: 80%; height: 800px;"></div>
-	<div>Google maps! Cheers!</div>
-	<button id="update_ui">Search</button>
+	<div id="main">
+		<div id="map" ></div>
+		<div id="filters_box">
+			<h2>Filters</h2>
+			<div id="weathers">
+				<h3>Weather</h3>
+				<ul>
+					<li><a class="weather" href="#">Sunny</a></li>
+					<li><a class="weather" href="#">Rainy</a></li>
+					<li><a class="weather" href="#">Cloudy</a></li>
+					<li><a class="weather" href="#">Snowy</a></li>
+				</ul>
+			</div>
+			<div id="time">
+				<h3>Time</h3>
+				<ul>
+					<li><a class="time" href="#">Morning</a></li>
+					<li><a class="time" href="#">Noon</a></li>
+					<li><a class="time" href="#">Afternoon</a></li>
+					<li><a class="time" href="#">Evening</a></li>
+					<li><a class="time" href="#">Night</a></li>
+				</ul>
+			</div>
+			<div id="keyword_box">
+				<h3>keyword</h3>
+				<div><input id="keyword" type="text"></div>
+			</div>
+			<div><button id="update_ui">Search</button></div>
+		</div>
+	<div id="main">
 	<script type="text/javascript">
 	
 		//search params
@@ -153,6 +212,14 @@
 		//main function, call to send ajax request and update the map
 		function getPhotos() {
 
+			//update the map bounds first
+			north_east_lat = map.getBounds().getNorthEast().lat();
+			north_east_lng = map.getBounds().getNorthEast().lng();
+			south_west_lat = map.getBounds().getSouthWest().lat();
+			south_west_lng = map.getBounds().getSouthWest().lng();
+			
+			keyword = $("#keyword").val();
+			
 			var url = 'searchPhotoServlet';
 			var params = 'weather='+weather+'&time='+time+'&lat1='+south_west_lat+'&lat2='+north_east_lat+'&lng1='+south_west_lng+'&lng2='+north_east_lng+'&keyword='+keyword;
 			httpGet(url, "GET", params);
@@ -160,15 +227,25 @@
 
 		$(function() {
 			$("#update_ui").click(function() {
-				
-				//update the map bounds first
-				north_east_lat = map.getBounds().getNorthEast().lat();
-				north_east_lng = map.getBounds().getNorthEast().lng();
-				south_west_lat = map.getBounds().getSouthWest().lat();
-				south_west_lng = map.getBounds().getSouthWest().lng();
-				
-		        //alert("north_east_lat:"+north_east_lat+" north_east_lng:"+north_east_lng+" south_west_lat:"+south_west_lat+" south_west_lng:"+south_west_lng);
-				search();
+				getPhotos();
+			});
+			
+			$(".weather").click(function(e){
+				$(".select_weather").toggleClass("select_weather");
+				 if(this==e.target){
+		             $(this).addClass("select_weather");
+		             weather = $(this).html();
+		         }
+				 getPhotos();
+			});
+			
+			$(".time").click(function(e){
+				$(".select_time").toggleClass("select_time");
+				 if(this==e.target){
+		             $(this).addClass("select_time");
+		             time = $(this).html();
+		         }
+				 getPhotos();
 			});
 
 			//wait some time to init the map. Fix the bug that map.getBounds returns null
