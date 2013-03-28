@@ -10,6 +10,8 @@ public class Photo {
 	private String aperture;
 	private int iso;
 	private int shutterSpeed;
+	private double latitude;
+	private double longitude;
 	private String url_small;
 	private String url_big;
 	
@@ -102,6 +104,22 @@ public class Photo {
 
 	public void setUrl_big(String url_big) {
 		this.url_big = url_big;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 	
 }
