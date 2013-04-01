@@ -1,19 +1,20 @@
 package edu.toronto.ece1779.gae.model;
 
 public class Photo {
-	private int imageId;
-	private String userId;
-	private String title;
-	private String description;
-	private String weather; //ideally use Enum type, here use String type to be simple. Same for the following fields.
-	private String time; 
-	private String aperture;
-	private int iso;
-	private int shutterSpeed;
-	private double latitude;
-	private double longitude;
-	private String url_small;
-	private String url_big;
+	private String userId = null;
+	private String weather = null; //ideally use Enum type, here use String type to be simple. Same for the following fields.
+	private String time = null; 
+	private double latitude = Double.MIN_VALUE;
+	private double longitude = Double.MIN_VALUE;
+	private String aperture = null;
+	private int shutterSpeed = Integer.MIN_VALUE;
+	private int iso = Integer.MIN_VALUE;
+	private int imageId = Integer.MIN_VALUE;
+	private String title = null;
+	private String description = null;
+	private String url_small = null;
+	private String url_big = null;
+
 	
 	public Photo() {
 	}
