@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
 import net.sf.json.JSONArray;
 import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.model.SearchCriteria;
@@ -21,6 +25,10 @@ public class SearchPhotoServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		ClearCache(response);
 
+		//get user
+		UserService userService = UserServiceFactory.getUserService();
+        User user = userService.getCurrentUser();
+        
 		//parse the request, construct the search criteria object
 		String weather = request.getParameter("weather");
 		String time = request.getParameter("time");
@@ -29,10 +37,10 @@ public class SearchPhotoServlet extends HttpServlet {
 		double lat2 = Double.parseDouble(request.getParameter("lat2"));
 		double lng1 = Double.parseDouble(request.getParameter("lng1"));
 		double lng2 = Double.parseDouble(request.getParameter("lng2"));
-		System.out.println("Parameters from UI - weather:" + weather + ";time:" + time + ";keyword:" + keyword
-				+ ";lat1:" + lat1 + ";lat2:" + lat2 + ";lng1:" + lng1 + ";lng2:" + lng2);
+		System.out.println("\nParameters from UI - user: " + user.toString() +"; weather: " + weather + " ;time: " + time + " ;keyword: " + keyword
+				+ " ;lat1: " + lat1 + " ;lat2: " + lat2 + " ;lng1: " + lng1 + " ;lng2: " + lng2);
 		
-		SearchCriteria searchCriteria = new SearchCriteria(keyword, weather, time, lat1, lat2, lng1, lng2, ""); 
+		SearchCriteria searchCriteria = new SearchCriteria(user.toString(), keyword, weather, time, lat1, lat2, lng1, lng2, ""); 
 		//TODO last parameter of searchCriteria is ownerId, needs to get it from UI.
 		PhotoService photoService = new PhotoServiceImpl();
 		List<Photo> searchResult = photoService.searchPhotos(searchCriteria);

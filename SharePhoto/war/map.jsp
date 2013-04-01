@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.appengine.api.users.User" %>
+<%@ page import="com.google.appengine.api.users.UserService" %>
+<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%@ page import="com.google.appengine.api.datastore.DatastoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.datastore.DatastoreService" %>
+<%@ page import="com.google.appengine.api.datastore.Query" %>
+<%@ page import="com.google.appengine.api.datastore.Entity" %>
+<%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
+<%@ page import="com.google.appengine.api.datastore.Key" %>
+<%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head> 
@@ -42,7 +54,26 @@
   }
   </style>
 </head>
-<body>
+	<body>
+		<h1 style="margin-left:450px">Welcome to share you Photos!</h1>
+					<%
+						UserService userService = UserServiceFactory.getUserService();
+						User user = userService.getCurrentUser();
+						if (user != null) {
+							pageContext.setAttribute("user", user);
+					%>
+					<p style="margin-left:1050px">
+						${fn:escapeXml(user.nickname)}! (You can <a
+							href="<%=userService.createLogoutURL(request.getRequestURI())%>">Logout</a>.)
+					</p> <%
+ 		} else {
+	 %>
+					<p style="margin-left:1050px">
+						<a href="<%=userService.createLoginURL(request.getRequestURI())%>">Login
+							with google account</a>
+					</p> <%
+ 		}
+ 	%>
 	<div id="main">
 		<div id="map" ></div>
 		<div id="filters_box">

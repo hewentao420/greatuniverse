@@ -36,7 +36,7 @@ public class PhotoServiceImpl implements PhotoService {
 		ArrayList<Photo> list = new ArrayList<Photo>();
 		Photo photo1 = new Photo();
 		photo1.setImageId(123);
-		photo1.setUserId("Jason");
+		photo1.setUserId(searchCriteria.getUserName());
 		photo1.setTitle("My profile");
 		photo1.setDescription("Nice photo");
 		photo1.setWeather("sunny");

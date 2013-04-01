@@ -6,7 +6,6 @@ function getAjaxJson()
   httpGet("searchPhotoServlet", "GET", "msg=123"); 
 }
 </script>
-
 </head>
 <body>
 <strong>AJAX JSON serialization example:</strong>

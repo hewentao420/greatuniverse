@@ -1,6 +1,7 @@
 package edu.toronto.ece1779.gae.model;
 
 public class SearchCriteria {
+	private String userName;
 	private String keyword;
 	private String weather; //ideally use Enum type, here use String type to be simple. Same for the following fields.
 	private String time; 
@@ -10,10 +11,11 @@ public class SearchCriteria {
 	private double longitudeTo;
 	private String ownerId;
 	
-	public SearchCriteria(String keyword, String weather, String time,
+	public SearchCriteria(String userName, String keyword, String weather, String time,
 			double latitudeFrom, double latitudeTo, double longitudeFrom,
 			double longitudeTo, String ownerId) {
 		super();
+		this.userName = userName;
 		this.keyword = keyword;
 		this.weather = weather;
 		this.time = time;
@@ -24,6 +26,13 @@ public class SearchCriteria {
 		this.ownerId = ownerId;
 	}
 	
+	public String getUserName(){
+		return userName;
+	}
+	
+	public void setUserName(String userName){
+		this.userName = userName;
+	}
 	public String getKeyword() {
 		return keyword;
 	}
