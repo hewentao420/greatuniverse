@@ -1,6 +1,7 @@
 package edu.toronto.ece1779.gae.model;
 
 public class Comment {
+	//
 	private int imageId;
 	private String userId;
 	private int rating;
