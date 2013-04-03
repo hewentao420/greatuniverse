@@ -1,15 +1,27 @@
 package edu.toronto.ece1779.gae.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.google.appengine.api.datastore.Key;
+
+@Entity(name = "photo")
 public class Comment {
-	private int imageId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Key CommentId;
+	
+	private Key imageId;
 	private String userId;
 	private int rating;
 	private String description;
 	
-	public int getImageId() {
+	public Key getImageId() {
 		return imageId;
 	}
-	public void setImageId(int imageId) {
+	public void setImageId(Key imageId) {
 		this.imageId = imageId;
 	}
 	public String getUserId() {

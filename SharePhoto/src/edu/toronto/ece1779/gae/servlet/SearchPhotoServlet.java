@@ -28,6 +28,12 @@ public class SearchPhotoServlet extends HttpServlet {
 		//get user
 		UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
+        String userId = null;
+        if(user == null){
+        	userId = "";
+        }else{
+        	userId = user.toString();
+        }
         
 		//parse the request, construct the search criteria object
 		String weather = request.getParameter("weather");
@@ -37,10 +43,10 @@ public class SearchPhotoServlet extends HttpServlet {
 		double lat2 = Double.parseDouble(request.getParameter("lat2"));
 		double lng1 = Double.parseDouble(request.getParameter("lng1"));
 		double lng2 = Double.parseDouble(request.getParameter("lng2"));
-		System.out.println("\nParameters from UI - user: " + user.toString() +"; weather: " + weather + " ;time: " + time + " ;keyword: " + keyword
+		System.out.println("\nParameters from UI - user: " + userId +"; weather: " + weather + " ;time: " + time + " ;keyword: " + keyword
 				+ " ;lat1: " + lat1 + " ;lat2: " + lat2 + " ;lng1: " + lng1 + " ;lng2: " + lng2);
 		
-		SearchCriteria searchCriteria = new SearchCriteria(user.toString(), keyword, weather, time, lat1, lat2, lng1, lng2, ""); 
+		SearchCriteria searchCriteria = new SearchCriteria(userId, keyword, weather, time, lat1, lat2, lng1, lng2, ""); 
 		//TODO last parameter of searchCriteria is ownerId, needs to get it from UI.
 		PhotoService photoService = new PhotoServiceImpl();
 		List<Photo> searchResult = photoService.searchPhotos(searchCriteria);
