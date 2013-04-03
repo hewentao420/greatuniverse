@@ -35,7 +35,6 @@ public class PhotoServiceImpl implements PhotoService {
 	public List<Photo> constructTestData(SearchCriteria searchCriteria) {
 		ArrayList<Photo> list = new ArrayList<Photo>();
 		Photo photo1 = new Photo();
-		photo1.setImageId(123);
 		photo1.setUserId(searchCriteria.getUserName());
 		photo1.setTitle("My profile");
 		photo1.setDescription("Nice photo");
@@ -51,7 +50,6 @@ public class PhotoServiceImpl implements PhotoService {
 		list.add(photo1);
 
 		Photo photo2 = new Photo();
-		photo2.setImageId(124);
 		photo2.setUserId("David");
 		photo2.setTitle("My dinner");
 		photo2.setDescription("Hotpot");

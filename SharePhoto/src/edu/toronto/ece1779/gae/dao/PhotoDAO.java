@@ -8,7 +8,6 @@ import edu.toronto.ece1779.gae.model.SearchCriteria;
 
 public interface PhotoDAO {
 	
-	//DAO	
 	public List<Photo> searchPhotos(SearchCriteria searchCriteria);
 	
 	public void addPhoto(Photo photo);

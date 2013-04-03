@@ -1,30 +1,33 @@
 package edu.toronto.ece1779.gae.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.google.appengine.api.datastore.Key;
+
+@Entity(name = "Photo")
 public class Photo {
-	private String userId = null;
-	private String weather = null; //ideally use Enum type, here use String type to be simple. Same for the following fields.
-	private String time = null; 
-	private double latitude = Double.MIN_VALUE;
-	private double longitude = Double.MIN_VALUE;
-	private String aperture = null;
-	private int shutterSpeed = Integer.MIN_VALUE;
-	private int iso = Integer.MIN_VALUE;
-	private int imageId = Integer.MIN_VALUE;
-	private String title = null;
-	private String description = null;
-	private String url_small = null;
-	private String url_big = null;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Key imageKey;
 	
-	public Photo() {
-	}
-
-	public int getImageId() {
-		return imageId;
-	}
-
-	public void setImageId(int imageId) {
-		this.imageId = imageId;
+	private String userId;
+	private String weather;
+	private String time; 
+	private double latitude;
+	private double longitude;
+	private String aperture;
+	private int shutterSpeed;
+	private int iso;
+	private String title;
+	private String description;
+	private String url_small;
+	private String url_big;
+	
+	public Key getImageKey(){
+		return imageKey;
 	}
 
 	public String getUserId() {
