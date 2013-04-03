@@ -152,6 +152,7 @@
 					pixelOffset : new google.maps.Size(0, 0),
 					zIndex : null,
 					boxStyle : {
+						width:"110px",
 						background : "#FFF",
 						border : "solid 1px",
 						padding : "1px 3px 3px 3px"
