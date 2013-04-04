@@ -1,5 +1,6 @@
 package edu.toronto.ece1779.gae.model;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,17 +14,29 @@ public class Photo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key imageKey;
 	
+	@Basic
 	private String userId;
+	@Basic
 	private String weather;
-	private String time; 
+	@Basic
+	private String time;
+	@Basic
 	private double latitude;
+	@Basic
 	private double longitude;
+	@Basic
 	private String aperture;
+	@Basic
 	private int shutterSpeed;
+	@Basic
 	private int iso;
+	@Basic
 	private String title;
+	@Basic
 	private String description;
+	@Basic
 	private String url_small;
+	@Basic
 	private String url_big;
 	
 	public Key getImageKey(){

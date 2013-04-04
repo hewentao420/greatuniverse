@@ -46,7 +46,7 @@ public class SearchPhotoServlet extends HttpServlet {
 		System.out.println("\nParameters from UI - user: " + userId +"; weather: " + weather + " ;time: " + time + " ;keyword: " + keyword
 				+ " ;lat1: " + lat1 + " ;lat2: " + lat2 + " ;lng1: " + lng1 + " ;lng2: " + lng2);
 		
-		SearchCriteria searchCriteria = new SearchCriteria(userId, keyword, weather, time, lat1, lat2, lng1, lng2, ""); 
+		SearchCriteria searchCriteria = new SearchCriteria(userId, keyword, weather, time, lat1, lat2, lng1, lng2); 
 		//TODO last parameter of searchCriteria is ownerId, needs to get it from UI.
 		PhotoService photoService = new PhotoServiceImpl();
 		List<Photo> searchResult = photoService.searchPhotos(searchCriteria);

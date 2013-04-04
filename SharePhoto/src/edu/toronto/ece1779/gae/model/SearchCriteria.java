@@ -9,11 +9,10 @@ public class SearchCriteria {
 	private double latitudeTo;
 	private double longitudeFrom;
 	private double longitudeTo;
-	private String ownerId;
 	
 	public SearchCriteria(String userName, String keyword, String weather, String time,
 			double latitudeFrom, double latitudeTo, double longitudeFrom,
-			double longitudeTo, String ownerId) {
+			double longitudeTo) {
 		super();
 		this.userName = userName;
 		this.keyword = keyword;
@@ -23,7 +22,6 @@ public class SearchCriteria {
 		this.latitudeTo = latitudeTo;
 		this.longitudeFrom = longitudeFrom;
 		this.longitudeTo = longitudeTo;
-		this.ownerId = ownerId;
 	}
 	
 	public String getUserName(){
@@ -75,11 +73,4 @@ public class SearchCriteria {
 	public void setLongitudeTo(double longitudeTo) {
 		this.longitudeTo = longitudeTo;
 	}
-	public String getOwnerId() {
-		return ownerId;
-	}
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
-	}
-	
 }

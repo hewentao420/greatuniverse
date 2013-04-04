@@ -1,5 +1,6 @@
 package edu.toronto.ece1779.gae.model;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +14,13 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key CommentId;
 	
+	@Basic
 	private Key imageId;
+	@Basic
 	private String userId;
+	@Basic
 	private int rating;
+	@Basic
 	private String description;
 	
 	public Key getImageId() {
