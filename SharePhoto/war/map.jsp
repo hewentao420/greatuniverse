@@ -82,6 +82,25 @@ body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 
 
 .filterbox{ width:400px; float:left;}
 .centered_text{ padding:0px 50px;}
+
+
+
+
+
+ .textfield1 {
+ 	width: 170px;
+	height: 22px;
+     background-color: ;
+     border: mediumpx groove #00ff00;
+     color: #000000;
+     font-size: 14;
+     font-family: ;
+     font-style: normal;
+     font-weight: ;
+     padding: 1px;
+     }
+
+
 </style>
 </head>
 <body style="background-color:black">
@@ -112,7 +131,7 @@ body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 
 	      </ul>
 	    </div>
 	</div>
-	<div>
+	<div style="height:25px">
 	<%
 		if (user != null) {
 			session.setAttribute("user", user);
@@ -128,6 +147,9 @@ body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 
 	<!-- <p style="margin-left: 1250px">
 		<a class="button" href="<%=userService.createLoginURL(request.getRequestURI())%>">Login</a>
 	</p> -->
+	<p style="margin-left: 1150px; text-align:right; padding-right:125px;">
+		                 
+	</p>
 	<%
 		}
 	%>
@@ -155,6 +177,7 @@ body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 
 				<h3 class="centered_text">Keyword</h3>
 				<div class="centered_text">
 					<input id="keyword" type="text">
+					
 				</div>
 			</div>
 			<div class="centered_text">
