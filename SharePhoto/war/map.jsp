@@ -175,7 +175,7 @@ body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 
 			</div>
 			<div id="keyword_box">
 				<h3 class="centered_text">Keyword</h3>
-				<div class="centered_text">
+				<div style="margin-left:10px">
 					<input id="keyword" type="text">
 					
 				</div>
