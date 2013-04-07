@@ -49,60 +49,115 @@
 .select_time {
 	color: red;
 }
+
+body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 auto;color:#757575;background-color:#FFFFFF;}
+
+#header{width:100%; height:120px; background-color:#f98740;}
+.header_content{ width:1000px; margin:auto; line-height:140px;}
+
+.button {
+  display: block;
+  width: 115px;
+  height: 25px;
+  background: #4E9CAF;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.logo{float:left;margin:0 0 0 40px; padding:0px;font-family: 'Source Sans Pro', sans-serif; font-size:20px; color:#505050;}
+.logo a{color:#fff; font-size:48px;}
+.logo span{ font-size:14px; color:#FFFFFF;}
+.header_content{ width:1000px; margin:auto; line-height:140px;}
+
+.menu{float:right; padding:0 20px 0 0;}
+.menu ul {list-style:none; margin:0; padding:0px;}
+.menu ul * {margin:0; padding:0;}
+.menu ul li {float:left; padding:0 20px 0 20px; height:35px;}
+.menu ul li a{font-family: 'Source Sans Pro', sans-serif;color:#fff; font-size:16px;}
+.menu ul li.selected a{color:#000;}
+.menu ul li a:hover{color:#000;}
+
+.filterbox{ width:400px; float:left;}
+.centered_text{ padding:0px 50px;}
 </style>
 </head>
-<body>
-	<h1 style="margin-left: 450px">Welcome to share you Photos!</h1>
+<body style="background-color:black">
+	<div class="header_content" id="header">
+		<div class="logo">
+			<a>PhotoTravel </a><span> an app for travel photo sharing</span>
+		</div>
+		<div class="menu">
+	      <ul>
+	        <li class="selected"><a href="#">home</a></li>
+	        <%
+				UserService userService = UserServiceFactory.getUserService();
+				User user = userService.getCurrentUser();
+				if (user != null) {
+					session.setAttribute("user", user);
+			%>
+	        <li><a href="<%=userService.createLogoutURL(request.getRequestURI())%>">logout</a></li>
+	        <%
+				} else {
+			%>
+			<li><a href="<%=userService.createLoginURL(request.getRequestURI())%>">login</a></li>
+			<%
+				}
+			%>
+	        
+	        <li><a href="#">link3</a></li>
+	        <li><a href="#">contact</a></li>
+	      </ul>
+	    </div>
+	</div>
+	<div>
 	<%
-		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
 		if (user != null) {
 			session.setAttribute("user", user);
 	%>
-	<p style="margin-left: 1050px">
-		${fn:escapeXml(user.nickname)}! (You can <a
-			href="<%=userService.createLogoutURL(request.getRequestURI())%>">Logout</a>.)
+	<p style="margin-left: 1150px; text-align:right; padding-right:125px;">
+		${fn:escapeXml(user.nickname)}! 
 	</p>
+
+	<!-- <a class="button" href="<%=userService.createLogoutURL(request.getRequestURI())%>">Logout</a> -->
 	<%
 		} else {
 	%>
-	<p style="margin-left: 1050px">
-		<a href="<%=userService.createLoginURL(request.getRequestURI())%>">Login
-			with google account</a>
-	</p>
+	<!-- <p style="margin-left: 1250px">
+		<a class="button" href="<%=userService.createLoginURL(request.getRequestURI())%>">Login</a>
+	</p> -->
 	<%
 		}
 	%>
-	<div id="main">
+	</div>
+	<div id="main" style="background-color:yellow">
 		<div id="map"></div>
-		<div id="filters_box">
-			<h2>Filters</h2>
-			<div id="weathers">
+		<div class="filterbox" id="filters_box">
+			<h2 class="centered_text">Filters</h2>
+			<div id="weathers" class="centered_text">
 				<h3>Weather</h3>
-				<ul>
-					<li><a class="weather" href="#">Sunny</a></li>
-					<li><a class="weather" href="#">Rainy</a></li>
-					<li><a class="weather" href="#">Cloudy</a></li>
-					<li><a class="weather" href="#">Snowy</a></li>
-				</ul>
+				<input class="weather" type="radio" name="weather" value="Sunny" >Sunny<br>
+				<input class="weather" type="radio" name="weather" value="Rainy" >Rainy<br>
+				<input class="weather" type="radio" name="weather" value="Cloudy" >Cloudy<br>
+				<input class="weather" type="radio" name="weather" value="Snowy" >Snowy<br>
 			</div>
-			<div id="time">
-				<h3>Time</h3>
-				<ul>
-					<li><a class="time" href="#">Morning</a></li>
-					<li><a class="time" href="#">Noon</a></li>
-					<li><a class="time" href="#">Afternoon</a></li>
-					<li><a class="time" href="#">Evening</a></li>
-					<li><a class="time" href="#">Night</a></li>
-				</ul>
+			<div class="centered_text" id="time">
+				<h3 >Time</h3>
+				<input class="time" type="radio" name="time" value="Morning" >Morning<br>
+				<input class="time" type="radio" name="time" value="Noon" >Noon<br>
+				<input class="time" type="radio" name="time" value="Afternoon" >Afternoon<br>
+				<input class="time" type="radio" name="time" value="Evening" >Evening<br>
+				<input class="time" type="radio" name="time" value="Night" >Night<br>
 			</div>
 			<div id="keyword_box">
-				<h3>keyword</h3>
-				<div>
+				<h3 class="centered_text">Keyword</h3>
+				<div class="centered_text">
 					<input id="keyword" type="text">
 				</div>
 			</div>
-			<div>
+			<div class="centered_text">
 				<button id="update_ui">Search</button>
 			</div>
 		</div>
