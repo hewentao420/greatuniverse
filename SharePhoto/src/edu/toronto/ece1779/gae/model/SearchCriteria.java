@@ -3,12 +3,16 @@ package edu.toronto.ece1779.gae.model;
 public class SearchCriteria {
 	private String userName;
 	private String keyword;
-	private String weather; //ideally use Enum type, here use String type to be simple. Same for the following fields.
+	private String weather; 
 	private String time; 
 	private double latitudeFrom;
 	private double latitudeTo;
 	private double longitudeFrom;
 	private double longitudeTo;
+	
+	public SearchCriteria() {
+		
+	}
 	
 	public SearchCriteria(String userName, String keyword, String weather, String time,
 			double latitudeFrom, double latitudeTo, double longitudeFrom,
@@ -27,7 +31,6 @@ public class SearchCriteria {
 	public String getUserName(){
 		return userName;
 	}
-	
 	public void setUserName(String userName){
 		this.userName = userName;
 	}
@@ -73,4 +76,12 @@ public class SearchCriteria {
 	public void setLongitudeTo(double longitudeTo) {
 		this.longitudeTo = longitudeTo;
 	}
+	
+	public boolean isCommonSearchCriteria() {
+		if("Sunny".equals(weather)
+				&& "Morning".equals(time))
+			return true;
+		return false;
+	}
+	
 }
