@@ -18,7 +18,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/addPhotoServlet" method="get" enctype="multipart/form-data">
+	<form action="/addPhotoServlet" method="post" enctype="multipart/form-data">
 		<table>
 			<tbody>
 				<tr>
