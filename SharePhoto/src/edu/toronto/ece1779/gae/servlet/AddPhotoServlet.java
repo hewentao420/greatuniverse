@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.nio.channels.Channels;
 import java.util.UUID;
 
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
 
 import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileService;
@@ -33,38 +33,27 @@ public class AddPhotoServlet extends HttpServlet {
 	private String url_big;
 	private String url_small;
 
-	protected void doGet(HttpServletRequest request,
+	
+	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		String title = request.getParameter("title");
-		String description = request.getParameter("description");
-		String weather = request.getParameter("weather");
-		String time = request.getParameter("time");
-		String aperture = request.getParameter("aperture");
-		String iso = request.getParameter("iso");
-		String shutterSpeed = request.getParameter("shutter_speed");		
-		double lat = 0;
-		if(request.getParameter("latitude")!=null && !("".equals(request.getParameter("latitude")))) {
-			lat = Double.parseDouble(request.getParameter("latitude"));
-		}
-		double lng = 0;
-		if(request.getParameter("longitude")!=null && !("".equals(request.getParameter("longitude")))) {
-			lng = Double.parseDouble(request.getParameter("longitude"));
-		}
-		
-		System.out.println("AddPhotoServlet:\nParameters from UI - weather: "
-				+ weather + " ;time: " + time + " ;title: " + title + " ;description: " + description + " ;aperture: " + aperture
-				+ " ;shutterSpeed: " + shutterSpeed + " ;iso: " + iso + " ;lat: " + lat + " ;lng: " + lng);
-
-
+		        
 		// get upload data
 		ServletFileUpload upload = new ServletFileUpload();
 		FileItemIterator iter;
-
+		
 		try {
 			iter = upload.getItemIterator(request);
 			while (iter.hasNext()) {
 				FileItemStream item = iter.next();
+				
+				if(item.isFormField()) {
+					InputStream steam = item.openStream();
+					String fieldName = item.getFieldName();
+					String value = Streams.asString(steam);
+					System.out.println("fieldName: " + fieldName + "; value" + value);
+				}
+				
+				
 				String mime = item.getContentType();
 				if (mime == null) {
 					mime = "null";
@@ -118,16 +107,15 @@ public class AddPhotoServlet extends HttpServlet {
 					is.close();
 
 				}
-
-				// sponse.sendRedirect("/addPhoto.jsp");
-
+						
+				//response.sendRedirect("/addPhoto.jsp");
 			}
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 			System.out.println("Exception::" + e.getMessage());
 			e.printStackTrace();
 		}
-
+		
 	}
 
 }
