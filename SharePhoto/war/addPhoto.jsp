@@ -18,7 +18,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/addPhotoServlet" method="post" enctype="multipart/form-data">
+	<form action="/addPhotoServlet" method="get" enctype="multipart/form-data">
 		<table>
 			<tbody>
 				<tr>
@@ -62,7 +62,7 @@
 				</tr>
 				<tr>
 					<td>ISO:</td>
-					<td><input type="text" name="aperture"></td>
+					<td><input type="text" name="iso"></td>
 				</tr>
 				<tr>
 					<td>Shutter speed:</td>

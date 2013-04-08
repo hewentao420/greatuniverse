@@ -33,31 +33,29 @@ public class AddPhotoServlet extends HttpServlet {
 	private String url_big;
 	private String url_small;
 
-	protected void doPost(HttpServletRequest request,
+	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		// wentao's test code
-//		String title = request.getParameter("title");
-//		String description = request.getParameter("description");
-//		String weather = request.getParameter("weather");
-//		String time = request.getParameter("time");
-//		String keyword = request.getParameter("keyword");
-//		double lat = Double.parseDouble(request.getParameter("latitude"));
-//		double lng = Double.parseDouble(request.getParameter("longitude"));
-		String title = "title";
-		String description = "description";
-		String weather = "sunny";
-		String time = "morning";
-		String keyword = "tit";
-		double lat = Math.random()*180;
-		double lng = Math.random()*180;
-		
+		String title = request.getParameter("title");
+		String description = request.getParameter("description");
+		String weather = request.getParameter("weather");
+		String time = request.getParameter("time");
+		String aperture = request.getParameter("aperture");
+		String iso = request.getParameter("iso");
+		String shutterSpeed = request.getParameter("shutter_speed");		
+		double lat = 0;
+		if(request.getParameter("latitude")!=null && !("".equals(request.getParameter("latitude")))) {
+			lat = Double.parseDouble(request.getParameter("latitude"));
+		}
+		double lng = 0;
+		if(request.getParameter("longitude")!=null && !("".equals(request.getParameter("longitude")))) {
+			lng = Double.parseDouble(request.getParameter("longitude"));
+		}
 		
 		System.out.println("AddPhotoServlet:\nParameters from UI - weather: "
-				+ weather + " ;time: " + time + " ;title: " + title + " ;description: " + description + " ;keyword: " + keyword
-				+ " ;lat: " + lat + " ;lng: " + lng);
-		// System.out.println("AddPhotoServlet:\nParameters from UI - weather: "
-		// + weather + " ;time: " + time);
+				+ weather + " ;time: " + time + " ;title: " + title + " ;description: " + description + " ;aperture: " + aperture
+				+ " ;shutterSpeed: " + shutterSpeed + " ;iso: " + iso + " ;lat: " + lat + " ;lng: " + lng);
+
 
 		// get upload data
 		ServletFileUpload upload = new ServletFileUpload();
