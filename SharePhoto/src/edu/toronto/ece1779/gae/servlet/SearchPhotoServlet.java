@@ -47,7 +47,7 @@ public class SearchPhotoServlet extends HttpServlet {
         SearchCriteria searchCriteria;
         if(false) {//TODO determine if it's the first time searching after login
         	 UserPrefs userPrefs = UserPrefs.getPrefsForUser(user);
-        	 searchCriteria = userPrefs.getSearchCriteria();
+        	 //searchCriteria = userPrefs.getSearchCriteria();
         } else {
         	 searchCriteria = constructSearchCriteriaFromRequest(request, userId);
         	 //TODO update userPrefs
