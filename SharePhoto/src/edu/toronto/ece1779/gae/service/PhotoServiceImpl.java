@@ -14,9 +14,9 @@ public class PhotoServiceImpl implements PhotoService {
 	@Override
 	public List<Photo> searchPhotos(SearchCriteria searchCriteria) {
 		//TODO once DAO is ready, switch to it.
-		//PhotoDAO photoDAO = new PhotoDAOImpl();
-		//return photoDAO.searchPhotos(searchCriteria);
-		return constructTestData(searchCriteria);
+		PhotoDAO photoDAO = new PhotoDAOImpl();
+		return photoDAO.searchPhotos(searchCriteria);
+		//return constructTestData(searchCriteria);
 	}
 
 	@Override

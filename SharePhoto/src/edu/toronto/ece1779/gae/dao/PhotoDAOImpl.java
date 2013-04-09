@@ -73,7 +73,7 @@ public class PhotoDAOImpl implements PhotoDAO {
 							+ " AND p.latitude < :latitudeFrom"
 							+ " AND p.longitude > :longitudeFrom"
 							+ " AND p.longitude < :longitudeTo"
-							+ " AND p.userName = :userName");
+							+ " AND p.userId = :userName");
 					query.setParameter("userName", searchCriteria.getUserName());
 				} else {
 					query = em.createQuery("SELECT p from Photo p"
@@ -84,7 +84,7 @@ public class PhotoDAOImpl implements PhotoDAO {
 							+ " AND p.longitude > :longitudeFrom"
 							+ " AND p.longitude < :longitudeTo"
 							+ " AND p.keyword LIKE :keyword"
-							+ " AND p.userName = :userName");
+							+ " AND p.userId = :userName");
 					query.setParameter("keyword",
 							"'" + "%" + searchCriteria.getKeyword() + "%" + "'");
 					query.setParameter("userName", searchCriteria.getUserName());
