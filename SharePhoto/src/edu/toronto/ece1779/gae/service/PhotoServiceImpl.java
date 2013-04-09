@@ -63,22 +63,23 @@ public class PhotoServiceImpl implements PhotoService {
 
 	@Override
 	public Photo retrievePhoto(long imageKey) {
-		Photo photo1 = new Photo();
-		photo1.setUserId("marcyliao123");
-		photo1.setNickName("Marcy");
-		photo1.setTitle("My profile");
-		photo1.setDescription("Nice photo");
-		photo1.setWeather("sunny");
-		photo1.setTime("morning");
-		photo1.setAperture("45F");
-		photo1.setIso(800);
-		photo1.setShutterSpeed(100);
-		photo1.setLatitude(12.3456);
-		photo1.setLongitude(23.4532);
-		photo1.setUrl_small("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
-		photo1.setUrl_big("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
+		PhotoDAO photoDAO = new PhotoDAOImpl();
+		return photoDAO.retrievePhoto(imageKey);
 		
-		return photo1;
+//		Photo photo1 = new Photo();
+//		photo1.setUserId("marcyliao123");
+//		photo1.setNickName("Marcy");
+//		photo1.setTitle("My profile");
+//		photo1.setDescription("Nice photo");
+//		photo1.setWeather("sunny");
+//		photo1.setTime("morning");
+//		photo1.setAperture("45F");
+//		photo1.setIso(800);
+//		photo1.setShutterSpeed(100);
+//		photo1.setLatitude(12.3456);
+//		photo1.setLongitude(23.4532);
+//		photo1.setUrl_small("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
+//		photo1.setUrl_big("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
 	}
 
 

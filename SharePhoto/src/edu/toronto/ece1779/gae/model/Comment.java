@@ -14,10 +14,10 @@ public class Comment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long commentId;
+	private Long commentId;
 	
 	@Basic
-	private long imageId;
+	private Long imageId;
 	@Basic
 	private String userId;
 	@Basic
@@ -27,16 +27,16 @@ public class Comment implements Serializable {
 	@Basic
 	private String description;
 	
-	public long getCommentId() {
+	public Long getCommentId() {
 		return commentId;
 	}
-	public void setCommentId(long commentId) {
+	public void setCommentId(Long commentId) {
 		this.commentId = commentId;
 	}
-	public long getImageId() {
+	public Long getImageId() {
 		return imageId;
 	}
-	public void setImageId(long imageId) {
+	public void setImageId(Long imageId) {
 		this.imageId = imageId;
 	}
 	public String getUserId() {

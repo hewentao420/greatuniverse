@@ -12,7 +12,10 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions"%>
 <%@ page import="com.google.appengine.api.datastore.Key"%>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
+
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link href="style.css" rel="stylesheet" type="text/css" />
@@ -120,8 +123,7 @@
 		
 		<div id="templatemo_content">
 			<div class="content_section">
-				<div style="height:40px">
-				</div>
+				<div style="height:40px">Owner: <c:out value="${nickName}"/></div>
 			</div>
 
 	        <div class="content_section">

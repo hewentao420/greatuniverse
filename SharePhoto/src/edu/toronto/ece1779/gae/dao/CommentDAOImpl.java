@@ -15,10 +15,8 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public List<Comment> retrieveComments(Photo photo) {
-		// TODO Auto-generated method stub
-
 		List<Comment> commentList = new ArrayList<Comment>();
-		long imageId = photo.getImageKey();
+		Long imageId = photo.getImageKey();
 
 		EntityManagerFactory emf = EMF.get();
 		EntityManager em = null;
@@ -29,9 +27,6 @@ public class CommentDAOImpl implements CommentDAO {
 			query = em
 					.createQuery("select c from Comment c where c.imageId = :imageId");
 			query.setParameter("imageId", imageId);
-//			query = em
-//					.createQuery("select c from Comment c where c.rating = 1");
-//			//query.setParameter("nickName", "Wentao");
 			
 			List results = query.getResultList();
 			if(results.size() != 0) {
@@ -41,8 +36,6 @@ public class CommentDAOImpl implements CommentDAO {
 					commentList.add(comment);
 				}
 			}
-			
-			
 		} finally {
 			em.close();
 		}
@@ -52,7 +45,6 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public void addComment(Comment comment) {
-		// TODO Auto-generated method stub
 		EntityManagerFactory emf = EMF.get();
 		EntityManager em = null;
 

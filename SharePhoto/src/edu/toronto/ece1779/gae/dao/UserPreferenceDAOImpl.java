@@ -1,6 +1,6 @@
 package edu.toronto.ece1779.gae.dao;
 
-public class ManageFavouriteUserDAOImpl implements ManageFavouriteUserDAO {
+public class UserPreferenceDAOImpl implements UserPreferenceDAO {
 
 	@Override
 	public boolean manageFavouriteUser(String ownerId, String favouriteUserId,

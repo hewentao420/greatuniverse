@@ -14,7 +14,7 @@ public class Photo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long imageKey;
+	private Long imageKey;
 	
 	@Basic
 	private String userId;
@@ -43,11 +43,11 @@ public class Photo implements Serializable {
 	@Basic
 	private String url_big;
 	
-	public void setImageKey(long imageKey){
+	public void setImageKey(Long imageKey){
 		this.imageKey = imageKey;
 	}
 	
-	public long getImageKey(){
+	public Long getImageKey(){
 		return imageKey;
 	}
 

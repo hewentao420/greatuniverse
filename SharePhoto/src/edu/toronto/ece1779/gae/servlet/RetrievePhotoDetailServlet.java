@@ -25,25 +25,20 @@ public class RetrievePhotoDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String key = request.getParameter(Constants.KEY);
-		System.out.println("key:" + key);
-		long imageKey = Long.parseLong(key);
+		Long imageKey = Long.parseLong(request.getParameter(Constants.KEY));
 		
 		PhotoService photoService = new PhotoServiceImpl();
 		Photo photo = photoService.retrievePhoto(imageKey);
-		
-		photo.setImageKey(12345);//TODO test code
+		photo.setImageKey(imageKey);
 		
 		CommentService commentService = new CommentServiceImpl();
 		List<Comment> commentList = commentService.retrieveComments(photo);
-		System.out.println("comment list size: " + commentList.size());
 		
 		request.setAttribute(Constants.PHOTO, photo);
 		request.setAttribute(Constants.COMMENTS, commentList);
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request,response);
-
 	}
 
 }

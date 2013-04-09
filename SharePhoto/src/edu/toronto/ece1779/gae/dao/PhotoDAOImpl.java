@@ -1,6 +1,7 @@
 package edu.toronto.ece1779.gae.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -145,7 +146,6 @@ public class PhotoDAOImpl implements PhotoDAO {
 
 	@Override
 	public void addPhoto(Photo photo) {
-		// TODO Auto-generated method stub
 		EntityManagerFactory emf = EMF.get();
 		EntityManager em = null;
 
@@ -158,5 +158,31 @@ public class PhotoDAOImpl implements PhotoDAO {
 		} finally {
 			em.close();
 		}
+	}
+
+
+	@Override
+	public Photo retrievePhoto(Long imageKey) {
+		Photo photo = new Photo();
+		
+		EntityManagerFactory emf = EMF.get();
+		EntityManager em = null;
+		Query query = null;
+		em = emf.createEntityManager();
+
+		try {
+			query = em
+					.createQuery("select p from Photo p where p.imageKey = :imageKey");
+			query.setParameter("imageKey", imageKey);
+			
+			List results = query.getResultList();
+			if(results.size() != 0) {
+				photo = (Photo)results.get(0);
+			}
+		} finally {
+			em.close();
+		}
+
+		return photo;
 	}
 }

@@ -29,10 +29,10 @@ public class AddCommentServlet extends HttpServlet {
 		String nickName = request.getParameter(Constants.NICK_NAME);
 		
 		commenterUserId = "hewentao@gmail.com";
-		long imageKey = 12345;
+		long imageKey = 1234;
 		//description = "interesting picture";
 		int rating = 1;
-		nickName = "Wentao";
+		nickName = "Marcy";
 		
 		Comment comment = new Comment();
 		comment.setImageId(imageKey);
