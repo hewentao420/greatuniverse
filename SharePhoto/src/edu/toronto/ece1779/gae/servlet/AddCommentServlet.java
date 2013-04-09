@@ -44,7 +44,7 @@ public class AddCommentServlet extends HttpServlet {
 		
 		request.setAttribute(Constants.COMMENTS, comments);
 		
-		String nextJSP = "/photoDetail.jsp";
+		String nextJSP = "/photoDetail.jsp"; //TODO
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request,response);
 	}
