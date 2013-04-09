@@ -21,8 +21,27 @@ public class PhotoServiceImpl implements PhotoService {
 
 	@Override
 	public List<Comment> retrieveComments(Photo photo) {
-		PhotoDAO photoDAO = new PhotoDAOImpl();
-		return photoDAO.retrieveComments(photo);
+		//PhotoDAO photoDAO = new PhotoDAOImpl();
+		//return photoDAO.retrieveComments(photo);
+		Comment comment = new Comment();
+		comment.setImageId(123);
+		comment.setDescription("wonderful");
+		comment.setRating(2);
+		comment.setUserId("hewentao420");
+		comment.setNickName("Wentao");
+
+		Comment comment2 = new Comment();
+		comment2.setImageId(123);
+		comment2.setDescription("bad");
+		comment2.setRating(2);
+		comment2.setUserId("abced1234");
+		comment2.setNickName("Tim");
+		
+		List<Comment> comments = new ArrayList<Comment>();
+		comments.add(comment);
+		comments.add(comment2);
+		
+		return comments; 
 	}
 
 	@Override
@@ -70,6 +89,26 @@ public class PhotoServiceImpl implements PhotoService {
 		list.add(photo2);
 		
 		return list;
+	}
+
+	@Override
+	public Photo retrievePhoto(long imageKey) {
+		Photo photo1 = new Photo();
+		photo1.setUserId("marcyliao123");
+		photo1.setNickName("Marcy");
+		photo1.setTitle("My profile");
+		photo1.setDescription("Nice photo");
+		photo1.setWeather("sunny");
+		photo1.setTime("morning");
+		photo1.setAperture("45F");
+		photo1.setIso(800);
+		photo1.setShutterSpeed(100);
+		photo1.setLatitude(12.3456);
+		photo1.setLongitude(23.4532);
+		photo1.setUrl_small("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
+		photo1.setUrl_big("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
+		
+		return photo1;
 	}
 	
 

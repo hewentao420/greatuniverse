@@ -19,6 +19,8 @@ public class Comment {
 	@Basic
 	private String userId;
 	@Basic
+	private String nickName;
+	@Basic
 	private int rating;
 	@Basic
 	private String description;
@@ -46,6 +48,12 @@ public class Comment {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 }

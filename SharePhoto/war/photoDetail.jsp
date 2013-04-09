@@ -11,7 +11,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-Hello:
-<c:out value="${key}"/>
+key: <c:out value="${key}"/> <br />
+nick name: <c:out value="${nickName}"/> <br />
+time: <c:out value="${time}"/> <br />
+aperture: <c:out value="${aperture}"/> <br />
+iso: <c:out value="${iso}"/> <br />
+shutter speed: <c:out value="${shutter_speed}"/> <br />
+
+
+<c:forEach var="comment" items="${comments}">
+	Comments - nick name: <c:out value="${comment.nickName}"/>
+	<br />
+	Comments - description: <c:out value="${comment.description}"/>
+	<br />
+</c:forEach>
+
 </body>
 </html>

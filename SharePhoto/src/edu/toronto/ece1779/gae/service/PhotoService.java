@@ -16,4 +16,6 @@ public interface PhotoService {
 	
 	public void addPhoto(Photo photo);
 	
+	public Photo retrievePhoto(long imageKey);
+	
 }
