@@ -26,7 +26,32 @@ public class PhotoDAOImpl implements PhotoDAO {
 		EntityManager em = null;
 		Query query = null;
 		em = emf.createEntityManager();
-
+		
+		List<String> weatherList = new ArrayList<String>();
+		List<String> timeList = new ArrayList<String>();
+		
+		if (searchCriteria.getWeather().equals("")) {
+			weatherList.add("sunny");
+			weatherList.add("snowy");
+			weatherList.add("rainy");
+			weatherList.add("cloudy");
+		} else {
+			weatherList.add(searchCriteria.getWeather());
+		}
+		
+		if (searchCriteria.getTime().equals("")) {
+			timeList.add("morning");
+			timeList.add("noon");
+			timeList.add("afternoon");
+			timeList.add("evening");
+			timeList.add("night");
+		} else {
+			weatherList.add(searchCriteria.getTime());
+		}
+		
+		return photoList;
+		
+		/*
 		List<String> weatherList = new ArrayList<String>();
 		List<String> timeList = new ArrayList<String>();
 
@@ -112,8 +137,9 @@ public class PhotoDAOImpl implements PhotoDAO {
 		} finally {
 			em.close();
 		}
-
+	
 		return photoList;
+		*/
 	}
 
 	@Override
