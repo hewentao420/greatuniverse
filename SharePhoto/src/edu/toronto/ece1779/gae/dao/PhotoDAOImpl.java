@@ -8,6 +8,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.google.appengine.api.datastore.Key;
+
 import edu.toronto.ece1779.gae.model.Comment;
 import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.model.SearchCriteria;
@@ -105,7 +107,7 @@ public class PhotoDAOImpl implements PhotoDAO {
 			query.setParameter("longitudeFrom",
 					searchCriteria.getLongitudeFrom());
 			query.setParameter("longitudeTo", searchCriteria.getLongitudeTo());
-			
+
 			photoList = (List<Photo>) query.getResultList();
 		} finally {
 			em.close();
@@ -118,7 +120,24 @@ public class PhotoDAOImpl implements PhotoDAO {
 	public List<Comment> retrieveComments(Photo photo) {
 		// TODO Auto-generated method stub
 
-		return null;
+		List<Comment> commentList = new ArrayList<Comment>();
+		long imageId = photo.getImageKey();
+
+		EntityManagerFactory emf = EMF.get();
+		EntityManager em = null;
+		Query query = null;
+		em = emf.createEntityManager();
+
+		try {
+			query = em
+					.createQuery("select c from Comment c where c.imageId = :imagerId");
+			query.setParameter("imageId", imageId);
+			commentList = (List<Comment>) query.getResultList();
+		} finally {
+			em.close();
+		}
+
+		return commentList;
 	}
 
 	@Override

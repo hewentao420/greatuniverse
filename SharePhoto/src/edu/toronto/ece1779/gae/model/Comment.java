@@ -12,10 +12,10 @@ import com.google.appengine.api.datastore.Key;
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key CommentId;
+	private long CommentId;
 	
 	@Basic
-	private Key imageId;
+	private long imageId;
 	@Basic
 	private String userId;
 	@Basic
@@ -23,10 +23,10 @@ public class Comment {
 	@Basic
 	private String description;
 	
-	public Key getImageId() {
+	public long getImageId() {
 		return imageId;
 	}
-	public void setImageId(Key imageId) {
+	public void setImageId(long imageId) {
 		this.imageId = imageId;
 	}
 	public String getUserId() {
