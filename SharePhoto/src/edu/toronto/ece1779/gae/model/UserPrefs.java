@@ -1,6 +1,7 @@
 package edu.toronto.ece1779.gae.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.*;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -22,8 +23,7 @@ public class UserPrefs implements Serializable {
 
     @Id
     private String userId;
-    
-    private SearchCriteria searchCriteria;
+    private List<FavouriteUser> favouriteUsers;
     
     public UserPrefs(User user) {
         this.userId = user.getUserId();
@@ -33,14 +33,19 @@ public class UserPrefs implements Serializable {
         return userId;
     }
     
-    public SearchCriteria getSearchCriteria() {
-		return searchCriteria;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public void setSearchCriteria(SearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
+	public List<FavouriteUser> getFavouriteUsers() {
+		return favouriteUsers;
 	}
 
+	public void setFavouriteUsers(List<FavouriteUser> favouriteUsers) {
+		this.favouriteUsers = favouriteUsers;
+	}
+
+	
 	@SuppressWarnings("unchecked")
     public static UserPrefs getPrefsForUser(User user) {
         UserPrefs userPrefs = null;
