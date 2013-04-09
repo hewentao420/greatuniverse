@@ -129,6 +129,7 @@
 	        <div class="content_section">
 	        	<div style="padding-top:20px;">
 	        		<img src="images/test.jpg"/>
+	        		<%-- <img src="${photo.url_big}"/> --%>
 	        	</div>
 			</div>
 			<div class="content_section">

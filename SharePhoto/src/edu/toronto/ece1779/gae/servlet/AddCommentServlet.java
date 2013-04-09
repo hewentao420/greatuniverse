@@ -8,6 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 import edu.toronto.ece1779.gae.model.Comment;
 import edu.toronto.ece1779.gae.model.Photo;
@@ -19,38 +24,35 @@ import edu.toronto.ece1779.gae.util.Constants;
 public class AddCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private static final String nextJSP = "/photoView.jsp";
+	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		String commenterUserId = request.getParameter(Constants.USER_ID);
-		//long imageKey = Long.parseLong(request.getParameter(Constants.KEY));
 		String description = request.getParameter(Constants.COMMENT);
 		//int rating = Integer.parseInt(request.getParameter(Constants.RATING));
-		String nickName = request.getParameter(Constants.NICK_NAME);
 		
-		commenterUserId = "hewentao@gmail.com";
-		long imageKey = 1;
-		//description = "interesting picture";
-		int rating = 1;
-		nickName = "Marcy";
+		UserService userService = UserServiceFactory.getUserService();
+        User user = userService.getCurrentUser();
+		
+		HttpSession session = request.getSession(true);
+		Photo photo = (Photo)session.getAttribute(Constants.PHOTO);
 		
 		Comment comment = new Comment();
-		comment.setImageId(imageKey);
+		comment.setImageId(photo.getImageKey());
 		comment.setDescription(description);
-		comment.setRating(rating);
-		comment.setUserId(commenterUserId);
-		comment.setNickName(nickName);
+		comment.setRating(1);
+		comment.setUserId(user.getUserId());
+		comment.setNickName(user.getNickname());
 		
 		CommentService commentService = new CommentServiceImpl();
 		commentService.addComment(comment);
 		
-		Photo photo = new Photo();
-		photo.setImageKey(imageKey);
-		List<Comment> comments = commentService.retrieveComments(photo);
+		List<Comment> commentList = commentService.retrieveComments(photo);
 		
-		//request.setAttribute(Constants.COMMENTS, comments);
+		request.setAttribute(Constants.PHOTO, photo);
+		request.setAttribute(Constants.COMMENT_LIST, commentList);
 		
-		String nextJSP = "/map.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request,response);
 	}

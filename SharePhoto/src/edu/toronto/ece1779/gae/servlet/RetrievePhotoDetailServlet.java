@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import edu.toronto.ece1779.gae.model.Comment;
 import edu.toronto.ece1779.gae.model.Photo;
@@ -30,6 +31,9 @@ public class RetrievePhotoDetailServlet extends HttpServlet {
 		PhotoService photoService = new PhotoServiceImpl();
 		Photo photo = photoService.retrievePhoto(imageKey);
 		photo.setImageKey(imageKey);
+		
+		HttpSession session = request.getSession(true);
+		session.setAttribute(Constants.PHOTO, photo);
 		
 		CommentService commentService = new CommentServiceImpl();
 		List<Comment> commentList = commentService.retrieveComments(photo);
