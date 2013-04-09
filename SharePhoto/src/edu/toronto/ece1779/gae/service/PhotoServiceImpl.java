@@ -31,6 +31,11 @@ public class PhotoServiceImpl implements PhotoService {
 		photoDAO.addComment(comment);
 	}
 	
+	@Override
+	public void addPhoto(Photo photo) {
+		PhotoDAO photoDAO = new PhotoDAOImpl();
+		photoDAO.addPhoto(photo);
+	}
 	
 	public List<Photo> constructTestData(SearchCriteria searchCriteria) {
 		ArrayList<Photo> list = new ArrayList<Photo>();

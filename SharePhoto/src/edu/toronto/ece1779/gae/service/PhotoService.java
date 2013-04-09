@@ -14,4 +14,6 @@ public interface PhotoService {
 
 	public void addComment(Comment comment);
 	
+	public void addPhoto(Photo photo);
+	
 }

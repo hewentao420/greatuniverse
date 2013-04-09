@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.Channels;
+import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -22,6 +23,13 @@ import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
 import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
+import edu.toronto.ece1779.gae.model.Photo;
+import edu.toronto.ece1779.gae.service.PhotoService;
+import edu.toronto.ece1779.gae.service.PhotoServiceImpl;
 
 public class AddPhotoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,15 +42,29 @@ public class AddPhotoServlet extends HttpServlet {
 	private String url_small;
 
 	
+	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		        
+
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		
+		if(user == null) {
+			
+			//TODO: return msg: need to login
+			return;
+		}
+		
 		// get upload data
 		ServletFileUpload upload = new ServletFileUpload();
 		FileItemIterator iter;
 		
 		try {
 			iter = upload.getItemIterator(request);
+			
+			HashMap<String, String> fieldMap = new HashMap<String, String>();
+			fieldMap.put("userId", user.getEmail());
+			
 			while (iter.hasNext()) {
 				FileItemStream item = iter.next();
 				
@@ -51,6 +73,7 @@ public class AddPhotoServlet extends HttpServlet {
 					String fieldName = item.getFieldName();
 					String value = Streams.asString(steam);
 					System.out.println("fieldName: " + fieldName + "; value" + value);
+					fieldMap.put(fieldName, value);
 				}
 				
 				
@@ -69,6 +92,10 @@ public class AddPhotoServlet extends HttpServlet {
 							+ fileName;
 					url_small = "http://storage.googleapis.com/ece1779/"
 							+ smallFileName;
+					
+					fieldMap.put("url_big", url_big);
+					fieldMap.put("url_small", url_big);
+					
 					// response.getWriter().println(fileName);
 					// response.getWriter().println("\n");
 					// response.getWriter().println(url_big);
@@ -107,9 +134,30 @@ public class AddPhotoServlet extends HttpServlet {
 					is.close();
 
 				}
-						
+				
+				
+				
 				//response.sendRedirect("/addPhoto.jsp");
 			}
+			
+			Photo photo = new Photo();
+			photo.setUserId(user.getEmail());
+			photo.setIso(Integer.parseInt(fieldMap.get("iso")));
+			photo.setAperture(fieldMap.get("aperture"));
+			photo.setShutterSpeed(Integer.parseInt(fieldMap.get("shutter_speed")));
+			photo.setTime(fieldMap.get("time"));
+			photo.setWeather(fieldMap.get("weather"));
+			photo.setTitle(fieldMap.get("title"));
+			photo.setDescription(fieldMap.get("description"));
+			photo.setLatitude(Double.parseDouble(fieldMap.get("latitude")));
+			photo.setLongitude(Double.parseDouble(fieldMap.get("longitude")));;
+			photo.setUrl_big(fieldMap.get("url_big"));
+			photo.setUrl_small(fieldMap.get("url_small"));
+			photo.setNickName(user.getNickname());
+			
+			PhotoService service = new PhotoServiceImpl();
+			service.addPhoto(photo);
+			
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 			System.out.println("Exception::" + e.getMessage());

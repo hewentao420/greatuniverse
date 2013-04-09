@@ -19,6 +19,8 @@ public class Photo implements Serializable {
 	@Basic
 	private String userId;
 	@Basic
+	private String nickName;
+	@Basic
 	private String weather;
 	@Basic
 	private String time;
@@ -40,6 +42,10 @@ public class Photo implements Serializable {
 	private String url_small;
 	@Basic
 	private String url_big;
+	
+	public void setImageKey(long imageKey){
+		this.imageKey = imageKey;
+	}
 	
 	public long getImageKey(){
 		return imageKey;
@@ -139,6 +145,14 @@ public class Photo implements Serializable {
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 }
