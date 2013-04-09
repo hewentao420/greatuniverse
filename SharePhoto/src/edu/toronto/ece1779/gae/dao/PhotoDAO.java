@@ -11,9 +11,5 @@ public interface PhotoDAO {
 	public List<Photo> searchPhotos(SearchCriteria searchCriteria);
 	
 	public void addPhoto(Photo photo);
-	
-	public List<Comment> retrieveComments(Photo photo); 
-
-	public void addComment(Comment comment);
 
 }

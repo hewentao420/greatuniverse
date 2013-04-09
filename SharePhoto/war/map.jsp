@@ -15,6 +15,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<link href="style.css" rel="stylesheet" type="text/css" />
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Google Maps Multiple Markers</title>
@@ -23,6 +24,13 @@
 <script type="text/javascript" src="script/ajaxRequest.js"></script>
 <script src="js/jquery-1.9.1.js" type="text/javascript"></script>
 <script src="js/infobox.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+	function clearText(field)
+	{
+	    if (field.defaultValue == field.value) field.value = '';
+	    else if (field.value == '') field.value = field.defaultValue;
+	}
+</script>
 <style type="text/css">
 #main {
 	height: 800px;
@@ -32,7 +40,7 @@
 }
 
 #map {
-	width: 1000px;
+	width: 670px;
 	height: 800px;
 	float: left;
 }
@@ -49,141 +57,128 @@
 .select_time {
 	color: red;
 }
-
-body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 auto;color:#757575;background-color:#FFFFFF;}
-
-#header{width:100%; height:120px; background-color:#f98740;}
-.header_content{ width:1000px; margin:auto; line-height:140px;}
-
-.button {
-  display: block;
-  width: 115px;
-  height: 25px;
-  background: #4E9CAF;
-  padding: 10px;
-  text-align: center;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
-}
-
-.logo{float:left;margin:0 0 0 40px; padding:0px;font-family: 'Source Sans Pro', sans-serif; font-size:20px; color:#505050;}
-.logo a{color:#fff; font-size:48px;}
-.logo span{ font-size:14px; color:#FFFFFF;}
-.header_content{ width:1000px; margin:auto; line-height:140px;}
-
-.menu{float:right; padding:0 20px 0 0;}
-.menu ul {list-style:none; margin:0; padding:0px;}
-.menu ul * {margin:0; padding:0;}
-.menu ul li {float:left; padding:0 20px 0 20px; height:35px;}
-.menu ul li a{font-family: 'Source Sans Pro', sans-serif;color:#fff; font-size:16px;}
-.menu ul li.selected a{color:#000;}
-.menu ul li a:hover{color:#000;}
-
-.filterbox{ width:400px; float:left;}
-.centered_text{ padding:0px 50px;}
-
-
-
-
-
- .textfield1 {
- 	width: 170px;
-	height: 22px;
-     background-color: ;
-     border: mediumpx groove #00ff00;
-     color: #000000;
-     font-size: 14;
-     font-family: ;
-     font-style: normal;
-     font-weight: ;
-     padding: 1px;
-     }
-
-
 </style>
 </head>
-<body style="background-color:black">
-	<div class="header_content" id="header">
-		<div class="logo">
-			<a>PhotoTravel </a><span> an app for travel photo sharing</span>
-		</div>
-		<div class="menu">
-	      <ul>
-	        <li class="selected"><a href="#">home</a></li>
-	        <%
-				UserService userService = UserServiceFactory.getUserService();
-				User user = userService.getCurrentUser();
-				if (user != null) {
-					session.setAttribute("user", user);
-			%>
-	        <li><a href="<%=userService.createLogoutURL(request.getRequestURI())%>">logout</a></li>
-	        <%
-				} else {
-			%>
-			<li><a href="<%=userService.createLoginURL(request.getRequestURI())%>">login</a></li>
-			<%
-				}
-			%>
-	        
-	        <li><a href="#">link3</a></li>
-	        <li><a href="#">contact</a></li>
-	      </ul>
-	    </div>
-	</div>
-	<div style="height:25px">
-	<%
-		if (user != null) {
-			session.setAttribute("user", user);
-	%>
-	<p style="margin-left: 1150px; text-align:right; padding-right:125px;">
-		${fn:escapeXml(user.nickname)}! 
-	</p>
+<body>
+	<div id="templatemo_header_wrapper">
 
-	<!-- <a class="button" href="<%=userService.createLogoutURL(request.getRequestURI())%>">Logout</a> -->
-	<%
-		} else {
-	%>
-	<!-- <p style="margin-left: 1250px">
-		<a class="button" href="<%=userService.createLoginURL(request.getRequestURI())%>">Login</a>
-	</p> -->
-	<p style="margin-left: 1150px; text-align:right; padding-right:125px;">
-		                 
-	</p>
-	<%
-		}
-	%>
+		<div id="templatemo_header">
+	    
+	   		<div id="site_title">
+	            <h1><a href="map.jsp" target="_parent">
+	            	PhotoTravel
+	                <span>photography sharing</span>
+	            </a></h1>
+	        </div>
+	        
+	        <div id="templatemo_menu">
+	            <ul>
+	                <li><a href="map.jsp" class="current">Home</a></li>
+	                <li><a href="#">Link1</a></li>
+	                <li><a href="#">Contact</a></li>
+	            </ul>    	
+	        </div> <!-- end of templatemo_menu -->
+	        
+	        <div id="search_box">
+	            <form action="#" method="get">
+	                <input type="text" value="Enter a keyword to search photos" name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
+	            </form>
+	        </div>
+	    
+	    	<div class="cleaner"></div>
+	    </div> <!-- end of templatemo_header -->
 	</div>
-	<div id="main" style="background-color:yellow">
-		<div id="map"></div>
-		<div class="filterbox" id="filters_box">
-			<h2 class="centered_text">Filters</h2>
-			<div id="weathers" class="centered_text">
-				<h3>Weather</h3>
-				<input class="weather" type="radio" name="weather" value="Sunny" >Sunny<br>
-				<input class="weather" type="radio" name="weather" value="Rainy" >Rainy<br>
-				<input class="weather" type="radio" name="weather" value="Cloudy" >Cloudy<br>
-				<input class="weather" type="radio" name="weather" value="Snowy" >Snowy<br>
-			</div>
-			<div class="centered_text" id="time">
-				<h3 >Time</h3>
-				<input class="time" type="radio" name="time" value="Morning" >Morning<br>
-				<input class="time" type="radio" name="time" value="Noon" >Noon<br>
-				<input class="time" type="radio" name="time" value="Afternoon" >Afternoon<br>
-				<input class="time" type="radio" name="time" value="Evening" >Evening<br>
-				<input class="time" type="radio" name="time" value="Night" >Night<br>
-			</div>
-			<div id="keyword_box">
-				<h3 class="centered_text">Keyword</h3>
-				<div style="margin-left:10px">
-					<input id="keyword" type="text">
-					
+	
+	<div id="templatemo_content_wrapper">
+		
+		<div id="templatemo_content">
+			<div class="content_section">
+				<div style="height:40px">
 				</div>
 			</div>
-			<div class="centered_text">
-				<button id="update_ui">Search</button>
+
+	        <div class="content_section">
+	        	<h2>World Map</h2>
+	        	<div id="map"></div>
+				<div class="cleaner"></div>
 			</div>
+			<div class="cleaner_h40"></div>
 		</div>
+		
+		<div id="templatmeo_sidebar">
+    
+    		<div class="sidebar_section">
+
+    			<div class="sidebar_section_content">
+					<div style="height:50px">
+					<%
+						UserService userService = UserServiceFactory.getUserService();
+						User user = userService.getCurrentUser();
+						if (user != null) {
+							session.setAttribute("user", user);
+					%>
+					<p style="float:right">
+						Hello, ${fn:escapeXml(user.nickname)}! 
+					</p>
+					<br>
+					<div class="button_01" style="padding-left:150px">
+						<a href="<%=userService.createLogoutURL(request.getRequestURI())%>">Logout</a>
+					</div>
+					<!-- <a class="button" href="<%=userService.createLogoutURL(request.getRequestURI())%>">Logout</a> -->
+					<%
+						} else {
+					%>
+					<p>
+						<div class="button_01" style="padding-left:150px">
+							<a href="<%=userService.createLoginURL(request.getRequestURI())%>">Login</a>
+						</div>
+					</p>
+					<%
+						}
+					%>
+					</div>
+    			</div>
+	       		<div class="sidebar_section_content">
+	                <h2>Filters</h2>
+					<div id="weathers" style="padding-left:70px">
+						<h3>Weather</h3>
+						<input class="weather" type="radio" name="weather" value="Sunny" >Sunny<br>
+						<input class="weather" type="radio" name="weather" value="Rainy" >Rainy<br>
+						<input class="weather" type="radio" name="weather" value="Cloudy" >Cloudy<br>
+						<input class="weather" type="radio" name="weather" value="Snowy" >Snowy<br>
+					</div>
+					<div id="time" style="padding-left:70px">
+						<h3 >Time</h3>
+						<input class="time" type="radio" name="time" value="Morning" >Morning<br>
+						<input class="time" type="radio" name="time" value="Noon" >Noon<br>
+						<input class="time" type="radio" name="time" value="Afternoon" >Afternoon<br>
+						<input class="time" type="radio" name="time" value="Evening" >Evening<br>
+						<input class="time" type="radio" name="time" value="Night" >Night<br>
+					</div>
+					<!-- <div id="keyword_box" style="padding-left:70px">
+						<h3>Keyword</h3>
+						<div>
+							<input id="keyword" type="text">
+							
+						</div>
+					</div>
+					<div style="padding-left:70px">
+						<button id="update_ui">Search</button>
+					</div>
+ -->
+	            </div>           
+        	</div>
+        
+	        <div class="cleaner_h30"></div>
+	        <div class="sidebar_section"></div>
+
+		</div> <!-- end of sidebar -->
+
+		<div class="cleaner"></div>  
+		</div><div id="templatemo_content_wrapper_bottom"></div> <!-- end of content_wrapper -->
+		<div id="templatemo_footer">
+            Copyright ECE1779 Group 4 | <a href="http://www.utoronto.ca">University of Toronto</a> | 
+        </div> <!-- end of templatemo_footer -->
 	</div>
 	<script type="text/javascript">
 		//search params

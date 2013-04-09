@@ -142,45 +142,6 @@ public class PhotoDAOImpl implements PhotoDAO {
 		*/
 	}
 
-	@Override
-	public List<Comment> retrieveComments(Photo photo) {
-		// TODO Auto-generated method stub
-
-		List<Comment> commentList = new ArrayList<Comment>();
-		long imageId = photo.getImageKey();
-
-		EntityManagerFactory emf = EMF.get();
-		EntityManager em = null;
-		Query query = null;
-		em = emf.createEntityManager();
-
-		try {
-			query = em
-					.createQuery("select c from Comment c where c.imageId = :imagerId");
-			query.setParameter("imageId", imageId);
-			commentList = (List<Comment>) query.getResultList();
-		} finally {
-			em.close();
-		}
-
-		return commentList;
-	}
-
-	@Override
-	public void addComment(Comment comment) {
-		// TODO Auto-generated method stub
-		EntityManagerFactory emf = EMF.get();
-		EntityManager em = null;
-
-		try {
-			em = emf.createEntityManager();
-			em.persist(comment);
-		} catch (Exception e) {
-			System.out.print(e);
-		} finally {
-			em.close();
-		}
-	}
 
 	@Override
 	public void addPhoto(Photo photo) {

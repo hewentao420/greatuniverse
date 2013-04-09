@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.toronto.ece1779.gae.dao.PhotoDAO;
 import edu.toronto.ece1779.gae.dao.PhotoDAOImpl;
-import edu.toronto.ece1779.gae.model.Comment;
 import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.model.SearchCriteria;
 
@@ -14,41 +13,12 @@ public class PhotoServiceImpl implements PhotoService {
 	@Override
 	public List<Photo> searchPhotos(SearchCriteria searchCriteria) {
 		//TODO once DAO is ready, switch to it.
-		PhotoDAO photoDAO = new PhotoDAOImpl();
-		return photoDAO.searchPhotos(searchCriteria);
-		//return constructTestData(searchCriteria);
-	}
-
-	@Override
-	public List<Comment> retrieveComments(Photo photo) {
 		//PhotoDAO photoDAO = new PhotoDAOImpl();
-		//return photoDAO.retrieveComments(photo);
-		Comment comment = new Comment();
-		comment.setImageId(123);
-		comment.setDescription("wonderful");
-		comment.setRating(2);
-		comment.setUserId("hewentao420");
-		comment.setNickName("Wentao");
-
-		Comment comment2 = new Comment();
-		comment2.setImageId(123);
-		comment2.setDescription("bad");
-		comment2.setRating(2);
-		comment2.setUserId("abced1234");
-		comment2.setNickName("Tim");
-		
-		List<Comment> comments = new ArrayList<Comment>();
-		comments.add(comment);
-		comments.add(comment2);
-		
-		return comments; 
+		//return photoDAO.searchPhotos(searchCriteria);
+		return constructTestData(searchCriteria);
 	}
 
-	@Override
-	public void addComment(Comment comment) {
-		PhotoDAO photoDAO = new PhotoDAOImpl();
-		photoDAO.addComment(comment);
-	}
+
 	
 	@Override
 	public void addPhoto(Photo photo) {
@@ -109,6 +79,14 @@ public class PhotoServiceImpl implements PhotoService {
 		photo1.setUrl_big("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
 		
 		return photo1;
+	}
+
+
+
+	@Override
+	public List<Photo> retrieveUserPhotos(String userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

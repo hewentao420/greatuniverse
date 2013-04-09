@@ -1,18 +1,20 @@
 package edu.toronto.ece1779.gae.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.google.appengine.api.datastore.Key;
+@Entity(name = "Comment")
+public class Comment implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-@Entity(name = "photo")
-public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long CommentId;
+	private long commentId;
 	
 	@Basic
 	private long imageId;
@@ -25,6 +27,12 @@ public class Comment {
 	@Basic
 	private String description;
 	
+	public long getCommentId() {
+		return commentId;
+	}
+	public void setCommentId(long commentId) {
+		this.commentId = commentId;
+	}
 	public long getImageId() {
 		return imageId;
 	}

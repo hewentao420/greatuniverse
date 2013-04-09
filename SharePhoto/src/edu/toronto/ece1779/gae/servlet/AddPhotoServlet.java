@@ -140,6 +140,7 @@ public class AddPhotoServlet extends HttpServlet {
 				//response.sendRedirect("/addPhoto.jsp");
 			}
 			
+			//TODO potential null pointer exception below
 			Photo photo = new Photo();
 			photo.setUserId(user.getEmail());
 			photo.setIso(Integer.parseInt(fieldMap.get("iso")));

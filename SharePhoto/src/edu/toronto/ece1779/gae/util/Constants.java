@@ -12,6 +12,7 @@ public class Constants {
 	public static final String APERTURE = "aperture";
 	public static final String ISO = "iso";
 	public static final String SHUTTER_SPEED = "shutter_speed";
+	public static final String PHOTO = "photo";
 	
 	public static final String RATING = "rating";
 	public static final String COMMENTS = "comments";
