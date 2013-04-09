@@ -13,7 +13,11 @@ public class ManageFavouriteUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-
+		//get userId, boolean type add/remove
+		
+		//call service, add/remove favorite user
+		
+		
 	}
 
 }
