@@ -23,14 +23,16 @@ import edu.toronto.ece1779.gae.util.Constants;
 
 public class AddCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private static final String nextJSP = "/photoView.jsp";
 	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		String description = request.getParameter(Constants.COMMENT);
-		//int rating = Integer.parseInt(request.getParameter(Constants.RATING));
+		
+		int rating = 0;
+		String ratingString = request.getParameter(Constants.RATING);
+		if(ratingString!=null && !(Constants.BLANK.equals(ratingString)))
+			rating = Integer.parseInt(ratingString);
 		
 		UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
@@ -41,7 +43,7 @@ public class AddCommentServlet extends HttpServlet {
 		Comment comment = new Comment();
 		comment.setImageId(photo.getImageKey());
 		comment.setDescription(description);
-		comment.setRating(1);
+		comment.setRating(rating);
 		comment.setUserId(user.getUserId());
 		comment.setNickName(user.getNickname());
 		
@@ -53,7 +55,7 @@ public class AddCommentServlet extends HttpServlet {
 		request.setAttribute(Constants.PHOTO, photo);
 		request.setAttribute(Constants.COMMENT_LIST, commentList);
 		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.PHOTO_VIEW_JSP);
 		dispatcher.forward(request,response);
 	}
 	

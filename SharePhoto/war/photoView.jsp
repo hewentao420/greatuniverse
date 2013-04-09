@@ -119,6 +119,7 @@
 	    </div> <!-- end of templatemo_header -->
 	</div>
 	
+	<form id="form1" action="/addCommentServlet" method="post">
 	<div id="templatemo_content_wrapper">
 		
 		<div id="templatemo_content">
@@ -135,11 +136,11 @@
 			<div class="content_section">
 				<fieldset class="rating">
 				    <legend>Please rate:</legend>
-				    <input type="radio" id="star5" name="rating" value="" /><label for="star5">5</label>
-				    <input type="radio" id="star4" name="rating" value="" /><label for="star4">4</label>
-				    <input type="radio" id="star3" name="rating" value="" /><label for="star3">3</label>
-				    <input type="radio" id="star2" name="rating" value="" /><label for="star2">2</label>
-				    <input type="radio" id="star1" name="rating" value="" /><label for="star1">1</label>
+				    <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5</label>
+				    <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4</label>
+				    <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3</label>
+				    <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2</label>
+				    <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1</label>
 				</fieldset>
 			</div>
 			<div class="cleaner_h40"></div>
@@ -182,11 +183,11 @@
 	                <h2>Comments</h2>
 	                <c:forEach var="comment" items="${commentList}">
 						<c:out value="${comment.nickName}"/>:
-						<c:out value="${comment.description}"/>
+						<c:out value="${comment.description}"/>(
+						<c:out value="${comment.rating}"/>)
 						<br />
 					</c:forEach>
 	       
-					<form id="form1" action="/addCommentServlet" method="post">
 					<br />
 					<textarea name="comment" id="comment" rows="4" cols="30"></textarea><br />
 						<div class="button_01">

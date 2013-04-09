@@ -1,6 +1,7 @@
 package edu.toronto.ece1779.gae.util;
 
 public class Constants {
+	public static final String BLANK = "";
 	
 	public static final String KEY = "key";
 	public static final String USER_ID = "userId";
@@ -17,4 +18,7 @@ public class Constants {
 	public static final String RATING = "rating";
 	public static final String COMMENT_LIST = "commentList";
 	public static final String COMMENT = "comment";
+	
+	public static final String PHOTO_VIEW_JSP = "/photoView.jsp";
+	
 }

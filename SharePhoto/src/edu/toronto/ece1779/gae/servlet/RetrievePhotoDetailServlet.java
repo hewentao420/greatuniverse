@@ -20,8 +20,6 @@ import edu.toronto.ece1779.gae.util.Constants;
 
 public class RetrievePhotoDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private static final String nextJSP = "/photoView.jsp";
 	
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -41,7 +39,7 @@ public class RetrievePhotoDetailServlet extends HttpServlet {
 		request.setAttribute(Constants.PHOTO, photo);
 		request.setAttribute(Constants.COMMENT_LIST, commentList);
 		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.PHOTO_VIEW_JSP);
 		dispatcher.forward(request,response);
 	}
 
