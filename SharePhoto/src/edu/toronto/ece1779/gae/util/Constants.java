@@ -15,6 +15,6 @@ public class Constants {
 	public static final String PHOTO = "photo";
 	
 	public static final String RATING = "rating";
-	public static final String COMMENTS = "comments";
+	public static final String COMMENT_LIST = "commentList";
 	public static final String COMMENT = "comment";
 }

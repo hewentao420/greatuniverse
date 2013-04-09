@@ -12,5 +12,7 @@ public interface PhotoDAO {
 	public void addPhoto(Photo photo);
 	
 	public Photo retrievePhoto(Long imageKey);
+	
+	public List<Photo> retrieveUserPhotos(String userId);
 
 }

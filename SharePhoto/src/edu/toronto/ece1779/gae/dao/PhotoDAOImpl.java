@@ -185,4 +185,34 @@ public class PhotoDAOImpl implements PhotoDAO {
 
 		return photo;
 	}
+
+
+	@Override
+	public List<Photo> retrieveUserPhotos(String userId) {
+		List<Photo> photoList = new ArrayList<Photo>();
+
+		EntityManagerFactory emf = EMF.get();
+		EntityManager em = null;
+		Query query = null;
+		em = emf.createEntityManager();
+
+		try {
+			query = em
+					.createQuery("select p from Photo p where p.userId = :userId");
+			query.setParameter("userId", userId);
+			
+			List results = query.getResultList();
+			if(results.size() != 0) {
+				Iterator it = results.iterator();
+				while(it.hasNext()) {
+					Photo photo = (Photo)it.next();
+					photoList.add(photo);
+				}
+			}
+		} finally {
+			em.close();
+		}
+
+		return photoList;
+	}
 }

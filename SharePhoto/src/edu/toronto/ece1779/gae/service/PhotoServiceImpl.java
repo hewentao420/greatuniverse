@@ -17,14 +17,26 @@ public class PhotoServiceImpl implements PhotoService {
 		//return photoDAO.searchPhotos(searchCriteria);
 		return constructTestData(searchCriteria);
 	}
-
-
 	
 	@Override
 	public void addPhoto(Photo photo) {
 		PhotoDAO photoDAO = new PhotoDAOImpl();
 		photoDAO.addPhoto(photo);
 	}
+
+	@Override
+	public Photo retrievePhoto(Long imageKey) {
+		PhotoDAO photoDAO = new PhotoDAOImpl();
+		return photoDAO.retrievePhoto(imageKey);
+	}
+
+	@Override
+	public List<Photo> retrieveUserPhotos(String userId) {
+		PhotoDAO photoDAO = new PhotoDAOImpl();
+		return photoDAO.retrieveUserPhotos(userId);
+	}
+	
+	
 	
 	public List<Photo> constructTestData(SearchCriteria searchCriteria) {
 		ArrayList<Photo> list = new ArrayList<Photo>();
@@ -60,35 +72,5 @@ public class PhotoServiceImpl implements PhotoService {
 		
 		return list;
 	}
-
-	@Override
-	public Photo retrievePhoto(long imageKey) {
-		PhotoDAO photoDAO = new PhotoDAOImpl();
-		return photoDAO.retrievePhoto(imageKey);
-		
-//		Photo photo1 = new Photo();
-//		photo1.setUserId("marcyliao123");
-//		photo1.setNickName("Marcy");
-//		photo1.setTitle("My profile");
-//		photo1.setDescription("Nice photo");
-//		photo1.setWeather("sunny");
-//		photo1.setTime("morning");
-//		photo1.setAperture("45F");
-//		photo1.setIso(800);
-//		photo1.setShutterSpeed(100);
-//		photo1.setLatitude(12.3456);
-//		photo1.setLongitude(23.4532);
-//		photo1.setUrl_small("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
-//		photo1.setUrl_big("https://lh4.googleusercontent.com/-YiREmvlXE4M/Theg088FkyI/AAAAAAAAAmI/rICo95CGQzU/w759-h767-p-o-k/DSCN2136.JPG");
-	}
-
-
-
-	@Override
-	public List<Photo> retrieveUserPhotos(String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 
 }

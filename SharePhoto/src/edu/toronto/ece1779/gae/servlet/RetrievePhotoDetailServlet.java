@@ -35,7 +35,7 @@ public class RetrievePhotoDetailServlet extends HttpServlet {
 		List<Comment> commentList = commentService.retrieveComments(photo);
 		
 		request.setAttribute(Constants.PHOTO, photo);
-		request.setAttribute(Constants.COMMENTS, commentList);
+		request.setAttribute(Constants.COMMENT_LIST, commentList);
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request,response);

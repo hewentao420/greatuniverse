@@ -123,7 +123,7 @@
 		
 		<div id="templatemo_content">
 			<div class="content_section">
-				<div style="height:40px">Owner: <c:out value="${nickName}"/></div>
+				<div style="height:40px">Owner: <c:out value="${photo.nickName}"/></div>
 			</div>
 
 	        <div class="content_section">
@@ -179,6 +179,12 @@
     			</div>
 	       		<div class="sidebar_section_content">
 	                <h2>Comments</h2>
+	                <c:forEach var="comment" items="${commentList}">
+						<c:out value="${comment.nickName}"/>:
+						<c:out value="${comment.description}"/>
+						<br />
+					</c:forEach>
+	       
 					<form id="form1" action="/addCommentServlet" method="post">
 					<br />
 					<textarea name="comment" id="comment" rows="4" cols="30"></textarea><br />

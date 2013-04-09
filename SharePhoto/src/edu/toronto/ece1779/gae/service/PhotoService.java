@@ -11,7 +11,7 @@ public interface PhotoService {
 	
 	public void addPhoto(Photo photo);
 	
-	public Photo retrievePhoto(long imageKey);
+	public Photo retrievePhoto(Long imageKey);
 
 	public List<Photo> retrieveUserPhotos(String userId);
 	
