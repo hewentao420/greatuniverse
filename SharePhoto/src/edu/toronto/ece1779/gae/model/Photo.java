@@ -1,5 +1,7 @@
 package edu.toronto.ece1779.gae.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import javax.persistence.Id;
 import com.google.appengine.api.datastore.Key;
 
 @Entity(name = "Photo")
-public class Photo {
+public class Photo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long imageKey;

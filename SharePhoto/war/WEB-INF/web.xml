@@ -16,10 +16,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-class>edu.toronto.ece1779.gae.servlet.AddPhotoServlet</servlet-class>
 	</servlet>
  	<servlet>
+        <servlet-name>retrievePhotoDetailServlet</servlet-name>
+        <servlet-class>edu.toronto.ece1779.gae.servlet.RetrievePhotoDetailServlet</servlet-class>
+	</servlet>
+ 	<servlet>
         <servlet-name>addCommentServlet</servlet-name>
         <servlet-class>edu.toronto.ece1779.gae.servlet.AddCommentServlet</servlet-class>
 	</servlet>
-		
+			
 	<servlet-mapping>
     	<servlet-name>searchPhotoServlet</servlet-name>
    	 	<url-pattern>/searchPhotoServlet</url-pattern>
@@ -27,6 +31,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
     	<servlet-name>addPhotoServlet</servlet-name>
    	 	<url-pattern>/addPhotoServlet</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+    	<servlet-name>retrievePhotoDetailServlet</servlet-name>
+   	 	<url-pattern>/retrievePhotoDetailServlet</url-pattern>
 	</servlet-mapping>	
 	<!-- <servlet-mapping>
     	<servlet-name>addCommentServlet</servlet-name>
