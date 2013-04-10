@@ -177,18 +177,18 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 						<p>
 							<table>
 								<tr>
-									<th><a href="/retrievePhotoDetailServlet?key=${photo.imageKey}"><img src="images/Achievements.jpg" /></a></th>
-																		 <%-- <img src="${photo.url_big}"/> --%>
+									<%-- <th><a href="/retrievePhotoDetailServlet?key=${photo.imageKey}"><img src="images/Achievements.jpg" /></a></th> --%>
+									<th><a href="/retrievePhotoDetailServlet?key=${photo.imageKey}"><img src="${photo.url_big}"/></a></th>
 									<th>
 										Name: <c:out value="${photo.nickName}"/><br/>
 										Description: <c:out value="${photo.description}"/><br/>
-										Rating:<br/>
+										Rating: <c:out value="${photo.rating}"/><br/>
 										
-										<%-- <%for(int i=0; i<%>${photo.rating}<%; i++){%> --%>
-										<%for(int i=0; i<3; i++){%>
-											<span class="rating star"></span>
-										<%}%>
-										
+										<%//int rate = Integer.parseInt(rating); %>
+										<%//for(int i=0; i<rate; i++){%>
+											<!--  <span class="rating star"></span> -->
+										<%//}%>
+																				 
 									</th>
 								</tr>
 							</table>
