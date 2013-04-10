@@ -150,6 +150,15 @@
 								</td>
 							</tr>
 							<tr>
+								<td>Tags:</td>
+								<td>
+									<span id="tags_span"></span>
+									<input id="tag_field" type="text"></input>
+									<button id="add_tag_button">Add Tag</button>
+									<input type="hidden" id="tags" value="" />
+								</td>
+							</tr>
+							<tr>
 								<td><br></td>
 								<td>
 									<div class="button_01">
@@ -188,6 +197,7 @@
 	</form>
 </body>
 <script type="text/javascript">
+	var tagsStr = "";
 	var marker = new google.maps.Marker();
 	var map = new google.maps.Map(document.getElementById('map'), {
 		zoom : 2,
@@ -206,6 +216,20 @@
 				map : map
 			});
 		});
+		
+		$("#add_tag_button").click(function() {
+			tagsStr += ("|" + $("#tag_field").val());
+			var tags = tagsStr.split("|");
+			var tagsHtml = ""
+			for(var i=0; i<tags.length; i++){
+				tagsHtml+=("<span>"+tags[i]+"</span> ");
+			}
+			$("#tags_span").html(tagsHtml);
+			$("#tags").val(tagsStr);
+			return false;
+		});
 	});
+	
+	
 </script>
 </html>
