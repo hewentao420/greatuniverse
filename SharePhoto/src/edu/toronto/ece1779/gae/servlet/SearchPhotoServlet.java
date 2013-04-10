@@ -64,7 +64,7 @@ public class SearchPhotoServlet extends HttpServlet {
 	    if(searchCriteria.isCommonSearchCriteria()){
 	    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(key);
 	    	if(searchResultInMemcache == null) {
-	    		SearchCriteria commonSearchCriteria = new SearchCriteria("", "", "Sunny", "Morning", 0, 0, 0, 0);
+	    		SearchCriteria commonSearchCriteria = new SearchCriteria("", "", "", "", 0, 0, 0, 0);
 				PhotoService photoService = new PhotoServiceImpl();
 				searchResultInMemcache = photoService.searchPhotos(commonSearchCriteria);
 				syncCache.put(key, searchResultInMemcache);
@@ -74,7 +74,10 @@ public class SearchPhotoServlet extends HttpServlet {
 			PhotoService photoService = new PhotoServiceImpl();
 			searchResult = photoService.searchPhotos(searchCriteria);
 	    	syncCache.put(key, searchResult);
-	    	System.out.println("Description in cache: " + ((List<Photo>)syncCache.get(key)).get(0).getDescription());
+	    	
+	    	if(((List<Photo>)syncCache.get(key)).size()>0) {
+	    		System.out.println("Description in cache: " + ((List<Photo>)syncCache.get(key)).get(0).getDescription());
+	    	}
 	    }
 	   		
 		//construct json object

@@ -41,7 +41,7 @@
 
 #map {
 	width: 670px;
-	height: 800px;
+	height: 600px;
 	float: left;
 }
 
@@ -142,18 +142,18 @@
 	                <h2>Filters</h2>
 					<div id="weathers" style="padding-left:70px">
 						<h3>Weather</h3>
-						<input class="weather" type="radio" name="weather" value="Sunny" >Sunny<br>
-						<input class="weather" type="radio" name="weather" value="Rainy" >Rainy<br>
-						<input class="weather" type="radio" name="weather" value="Cloudy" >Cloudy<br>
-						<input class="weather" type="radio" name="weather" value="Snowy" >Snowy<br>
+						<input class="weather" type="radio" name="weather" value="sunny" >Sunny<br>
+						<input class="weather" type="radio" name="weather" value="rainy" >Rainy<br>
+						<input class="weather" type="radio" name="weather" value="cloudy" >Cloudy<br>
+						<input class="weather" type="radio" name="weather" value="snowy" >Snowy<br>
 					</div>
 					<div id="time" style="padding-left:70px">
 						<h3 >Time</h3>
-						<input class="time" type="radio" name="time" value="Morning" >Morning<br>
-						<input class="time" type="radio" name="time" value="Noon" >Noon<br>
-						<input class="time" type="radio" name="time" value="Afternoon" >Afternoon<br>
-						<input class="time" type="radio" name="time" value="Evening" >Evening<br>
-						<input class="time" type="radio" name="time" value="Night" >Night<br>
+						<input class="time" type="radio" name="time" value="morning" >Morning<br>
+						<input class="time" type="radio" name="time" value="noon" >Noon<br>
+						<input class="time" type="radio" name="time" value="afternoon" >Afternoon<br>
+						<input class="time" type="radio" name="time" value="evening" >Evening<br>
+						<input class="time" type="radio" name="time" value="night" >Night<br>
 					</div>
 					<!-- <div id="keyword_box" style="padding-left:70px">
 						<h3>Keyword</h3>
@@ -182,9 +182,9 @@
 	</div>
 	<script type="text/javascript">
 		//search params
-		var weather = "sunny";
-		var time = "morning";
-		var keyword = "hi";
+		var weather = "";
+		var time = "";
+		var keyword = "";
 		var north_east_lat = 90;
 		var north_east_lng = 180;
 		var south_west_lat = -90;
@@ -312,6 +312,8 @@
 					update_ui();
 				} else {
 					alert("no data");
+					pictures = new Array();
+					update_ui();
 				}
 			}
 		}
@@ -344,7 +346,7 @@
 				$(".select_weather").toggleClass("select_weather");
 				if (this == e.target) {
 					$(this).addClass("select_weather");
-					weather = $(this).html();
+					weather = $(this).val();
 				}
 				getPhotos();
 			});
@@ -353,7 +355,7 @@
 				$(".select_time").toggleClass("select_time");
 				if (this == e.target) {
 					$(this).addClass("select_time");
-					time = $(this).html();
+					time = $(this).val();
 				}
 				getPhotos();
 			});

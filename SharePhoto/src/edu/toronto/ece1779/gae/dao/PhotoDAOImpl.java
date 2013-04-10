@@ -9,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Key;
 
 import edu.toronto.ece1779.gae.model.Comment;
@@ -47,7 +48,55 @@ public class PhotoDAOImpl implements PhotoDAO {
 			timeList.add("evening");
 			timeList.add("night");
 		} else {
-			weatherList.add(searchCriteria.getTime());
+			timeList.add(searchCriteria.getTime());
+		}
+
+		//TODO: Only one inequality supported in GAE, Try another method
+		String sql = "SELECT p from Photo p"
+				+ " WHERE p.weather IN (:weatherList)"
+				+ " AND p.time in(:timeList)"
+				+ " AND p.latitude > :latitudeFrom"
+				+ " AND p.latitude < :latitudeTo";
+		
+		
+		if(!searchCriteria.getUserName().equals("")){
+			sql += " AND p.userId = :userId";
+		}
+
+		//TODO: GAE doesn't support fuzzy search. Try another method
+		//if(!searchCriteria.getKeyword().equals("")){
+		//	sql += " AND p.title >= :key1 AND p.title < :key2";
+		//}
+		
+
+		query = em.createQuery(sql);
+		query.setParameter("weatherList", weatherList);
+		query.setParameter("timeList", timeList);
+		query.setParameter("latitudeFrom", searchCriteria.getLatitudeFrom());
+		query.setParameter("latitudeTo", searchCriteria.getLatitudeTo());
+
+		if(!searchCriteria.getUserName().equals("")){
+			query.setParameter("userId", searchCriteria.getUserName());
+		}
+
+		//TODO: GAE doesn't support fuzzy search. Try another method
+		//if(!searchCriteria.getKeyword().equals("")){
+		//	query.setParameter("key1", searchCriteria.getKeyword());
+		//	query.setParameter("key2", searchCriteria.getKeyword() + "/ufffd");
+		//}
+		
+		
+		try {
+			List<Photo> results = query.getResultList();
+			if(results.size() != 0) {
+				Iterator<Photo> it = results.iterator();
+				while(it.hasNext()) {
+					Photo photo = (Photo)it.next();
+					photoList.add(photo);
+				}
+			}
+		} finally {
+			em.close();
 		}
 		
 		return photoList;
