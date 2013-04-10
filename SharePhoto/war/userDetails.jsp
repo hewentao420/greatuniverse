@@ -178,11 +178,11 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 							<table>
 								<tr>
 									<%-- <th><a href="/retrievePhotoDetailServlet?key=${photo.imageKey}"><img src="images/Achievements.jpg" /></a></th> --%>
-									<th><a href="/retrievePhotoDetailServlet?key=${photo.imageKey}"><img src="${photo.url_big}"/></a></th>
+									<th><a href="/retrievePhotoDetailServlet?key=${photo.imageKey}"><img style="width:200px; min-height:100px"" src="${photo.url_big}"/></a></th>
 									<th>
 										Name: <c:out value="${photo.nickName}"/><br/>
 										Description: <c:out value="${photo.description}"/><br/>
-										
+										Rating:
 										<c:set var="rating" value="${photo.rating}"/>
 										<c:if test="${fn:startsWith(rating,'1') }">
 											<span class="rating star"></span>
@@ -199,7 +199,8 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 										<c:if test="${fn:startsWith(rating,'5') }">
 											<span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
 										</c:if>
-										 
+										<br/>
+										Tags: ${photo.tag1} ${photo.tag2} ${photo.tag3} ${photo.tag4} ${photo.tag5} 			 
 									</th>
 								</tr>
 							</table>

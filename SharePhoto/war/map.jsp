@@ -78,12 +78,7 @@
 	                <li><a href="#">Contact</a></li>
 	            </ul>    	
 	        </div> <!-- end of templatemo_menu -->
-	        
-	        <div id="search_box">
-	            <form action="#" method="get">
-	                <input type="text" value="Enter a keyword to search photos" name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
-	            </form>
-	        </div>
+
 	    
 	    	<div class="cleaner"></div>
 	    </div> <!-- end of templatemo_header -->
@@ -158,7 +153,7 @@
 					<div id="search2" style="padding-left:70px">
 						<h3 >Tag Search</h3>
 						<input id="keyword" type="text" />
-						<div class="button_01">
+						<div class="button_01" style="margin-top:5px">
 							<a id="update_ui">Update</a>
 						</div>
 					</div>
