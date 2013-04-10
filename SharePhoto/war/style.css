@@ -364,4 +364,9 @@ img { margin: 0px; padding: 0px; border: none; }
 	border: none;
 }
 
+#tags_span span{
+	background:yellow;
+	padding:3px;
+}
+
 /* end of footer */

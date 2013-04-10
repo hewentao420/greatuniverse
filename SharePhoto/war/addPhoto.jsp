@@ -71,7 +71,6 @@
 	                <%
 						}
 					%>
-	                <li><a href="#">Link1</a></li>
 	                <li><a href="#">Contact</a></li>
 	            </ul>    	
 	        </div> <!-- end of templatemo_menu -->

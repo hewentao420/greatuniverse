@@ -48,7 +48,15 @@ public class Photo implements Serializable {
 	@Basic
 	private int commentedTimes;
 	@Basic 
-	private List<String> tags;
+	private String tag1;
+	@Basic 
+	private String tag2;
+	@Basic 
+	private String tag3;
+	@Basic 
+	private String tag4;
+	@Basic 
+	private String tag5;
 	
 
 	public void setImageKey(Long imageKey){
@@ -179,12 +187,44 @@ public class Photo implements Serializable {
 		this.commentedTimes = commentedTimes;
 	}
 
-	public List<String> getTags() {
-		return tags;
+	public String getTag1() {
+		return tag1;
 	}
 
-	public void setTags(List<String> tags) {
-		this.tags = tags;
+	public void setTag1(String tag1) {
+		this.tag1 = tag1;
 	}
-	
+
+	public String getTag2() {
+		return tag2;
+	}
+
+	public void setTag2(String tag2) {
+		this.tag2 = tag2;
+	}
+
+	public String getTag3() {
+		return tag3;
+	}
+
+	public void setTag3(String tag3) {
+		this.tag3 = tag3;
+	}
+
+	public String getTag4() {
+		return tag4;
+	}
+
+	public void setTag4(String tag4) {
+		this.tag4 = tag4;
+	}
+
+	public String getTag5() {
+		return tag5;
+	}
+
+	public void setTag5(String tag5) {
+		this.tag5 = tag5;
+	}
+
 }
