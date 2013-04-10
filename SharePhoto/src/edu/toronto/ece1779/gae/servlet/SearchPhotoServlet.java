@@ -56,11 +56,13 @@ public class SearchPhotoServlet extends HttpServlet {
         	 //userPrefs.save();
         }
        
+
         //get searchResult and/or update it in memcache
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 	    syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 	    String key = "commonSearchResult";
 	    List<Photo> searchResult;
+	
 	    if(searchCriteria.isCommonSearchCriteria()){
 	    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(key);
 	    	if(searchResultInMemcache == null) {
@@ -72,6 +74,7 @@ public class SearchPhotoServlet extends HttpServlet {
 	    	searchResult = filterUnMatched(searchResultInMemcache, searchCriteria);
 	    } else {
 			PhotoService photoService = new PhotoServiceImpl();
+
 			searchResult = photoService.searchPhotos(searchCriteria);
 	    	syncCache.put(key, searchResult);
 	    	
@@ -96,7 +99,7 @@ public class SearchPhotoServlet extends HttpServlet {
 		String weather = request.getParameter("weather");
 		String time = request.getParameter("time");
 		String keyword = request.getParameter("keyword");
-		double lat1 = Double.parseDouble(request.getParameter("lat1"));
+		double lat1 = Double.parseDouble(request.getParameter("lat1"));	
 		double lat2 = Double.parseDouble(request.getParameter("lat2"));
 		double lng1 = Double.parseDouble(request.getParameter("lng1"));
 		double lng2 = Double.parseDouble(request.getParameter("lng2"));
