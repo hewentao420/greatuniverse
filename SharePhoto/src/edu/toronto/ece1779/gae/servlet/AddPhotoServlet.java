@@ -137,8 +137,6 @@ public class AddPhotoServlet extends HttpServlet {
 
 				}
 				
-				
-				
 				//response.sendRedirect("/addPhoto.jsp");
 			}
 			
@@ -159,7 +157,10 @@ public class AddPhotoServlet extends HttpServlet {
 			photo.setNickName(user.getNickname());
 			
 			//add tags
+			String tagsStr = fieldMap.get("tags");
+			String[] tags = tagsStr.split(",");
 			
+			setTags(photo, tags);
 			
 			PhotoService service = new PhotoServiceImpl();
 			service.addPhoto(photo);
@@ -173,6 +174,36 @@ public class AddPhotoServlet extends HttpServlet {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.MAP_JSP);
 		dispatcher.forward(request,response);
 		
+	}
+
+
+
+	private void setTags(Photo photo, String[] tags) {
+		if(tags.length == 1 && !tags[0].equals("")) {
+			photo.setTag1(tags[0]);
+		}
+		else if(tags.length == 2) {
+			photo.setTag1(tags[0]);
+			photo.setTag2(tags[1]);
+		}
+		else if(tags.length == 3) {
+			photo.setTag1(tags[0]);
+			photo.setTag2(tags[1]);
+			photo.setTag3(tags[2]);
+		}
+		else if(tags.length == 4) {
+			photo.setTag1(tags[0]);
+			photo.setTag2(tags[1]);
+			photo.setTag3(tags[2]);
+			photo.setTag4(tags[3]);
+		}
+		else if(tags.length == 5) {
+			photo.setTag1(tags[0]);
+			photo.setTag2(tags[1]);
+			photo.setTag3(tags[2]);
+			photo.setTag4(tags[3]);
+			photo.setTag5(tags[4]);
+		}
 	}
 
 }

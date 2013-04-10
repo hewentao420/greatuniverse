@@ -154,7 +154,7 @@
 									<span id="tags_span"></span>
 									<input id="tag_field" type="text"></input>
 									<button id="add_tag_button">Add Tag</button>
-									<input type="hidden" id="tags" value="" />
+									<input type="hidden" id="tags" name="tags" value="" />
 								</td>
 							</tr>
 							<tr>
@@ -217,8 +217,13 @@
 		});
 		
 		$("#add_tag_button").click(function() {
-			tagsStr += ("|" + $("#tag_field").val());
-			var tags = tagsStr.split("|");
+			if(tagsStr == ""){
+				tagsStr += ($("#tag_field").val());
+			}
+			else{
+				tagsStr += ("," + $("#tag_field").val());
+			}
+			var tags = tagsStr.split(",");
 			var tagsHtml = ""
 			for(var i=0; i<tags.length; i++){
 				tagsHtml+=("<span>"+tags[i]+"</span> ");

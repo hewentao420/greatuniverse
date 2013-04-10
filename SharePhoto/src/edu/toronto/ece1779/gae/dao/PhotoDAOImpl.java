@@ -62,32 +62,42 @@ public class PhotoDAOImpl implements PhotoDAO {
 		if(!searchCriteria.getUserName().equals("")){
 			sql += " AND p.userId = :userId";
 		}
-
-		//TODO: GAE doesn't support fuzzy search. Try another method
-		//if(!searchCriteria.getKeyword().equals("")){
-		//	sql += " AND p.title >= :key1 AND p.title < :key2";
-		//}
-		
-
-		query = em.createQuery(sql);
-		query.setParameter("weatherList", weatherList);
-		query.setParameter("timeList", timeList);
-		query.setParameter("latitudeFrom", searchCriteria.getLatitudeFrom());
-		query.setParameter("latitudeTo", searchCriteria.getLatitudeTo());
-
-		if(!searchCriteria.getUserName().equals("")){
-			query.setParameter("userId", searchCriteria.getUserName());
-		}
-
-		//TODO: GAE doesn't support fuzzy search. Try another method
-		//if(!searchCriteria.getKeyword().equals("")){
-		//	query.setParameter("key1", searchCriteria.getKeyword());
-		//	query.setParameter("key2", searchCriteria.getKeyword() + "/ufffd");
-		//}
-		
 		
 		try {
-			List<Photo> results = query.getResultList();
+			List<Photo> results = new ArrayList<Photo>();
+			if(searchCriteria.getKeyword().equals("")){
+				
+				query = em.createQuery(sql);
+				query.setParameter("weatherList", weatherList);
+				query.setParameter("timeList", timeList);
+				query.setParameter("latitudeFrom", searchCriteria.getLatitudeFrom());
+				query.setParameter("latitudeTo", searchCriteria.getLatitudeTo());
+
+				if(!searchCriteria.getUserName().equals("")){
+					query.setParameter("userId", searchCriteria.getUserName());
+				}
+	
+				results = query.getResultList();
+			}
+			else {
+				
+				for(int i=1; i<6; i++) {
+					String sqlTmp = sql+" AND tag"+i+" = :key";
+					
+					query = em.createQuery(sqlTmp);
+					query.setParameter("weatherList", weatherList);
+					query.setParameter("timeList", timeList);
+					query.setParameter("latitudeFrom", searchCriteria.getLatitudeFrom());
+					query.setParameter("latitudeTo", searchCriteria.getLatitudeTo());
+					
+					if(!searchCriteria.getKeyword().equals("")){
+						query.setParameter("key", searchCriteria.getKeyword());
+					}
+					
+					results.addAll(query.getResultList());
+				}
+			}
+			
 			if(results.size() != 0) {
 				Iterator<Photo> it = results.iterator();
 				while(it.hasNext()) {

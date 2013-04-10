@@ -155,6 +155,13 @@
 						<input class="time" type="radio" name="time" value="evening" >Evening<br>
 						<input class="time" type="radio" name="time" value="night" >Night<br>
 					</div>
+					<div id="search2" style="padding-left:70px">
+						<h3 >Tag Search</h3>
+						<input id="keyword" type="text" />
+						<div class="button_01">
+							<a id="update_ui">Update</a>
+						</div>
+					</div>
 					
 	            </div>           
         	</div>
@@ -318,7 +325,7 @@
 			south_west_lng = map.getBounds().getSouthWest().lng();
 
 			keyword = $("#keyword").val();
-
+			
 			var url = 'searchPhotoServlet';
 			var params = 'weather=' + weather + '&time=' + time + '&lat1='
 					+ south_west_lat + '&lat2=' + north_east_lat + '&lng1='
