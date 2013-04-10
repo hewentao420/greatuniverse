@@ -74,7 +74,7 @@
 	        <div id="templatemo_menu">
 	            <ul>
 	                <li><a href="map.jsp" class="current">Home</a></li>
-	                <li><a href="#">Link1</a></li>
+	                <li><a href="addPhoto.jsp">Upload Photo</a></li>
 	                <li><a href="#">Contact</a></li>
 	            </ul>    	
 	        </div> <!-- end of templatemo_menu -->
@@ -155,10 +155,7 @@
 						<input class="time" type="radio" name="time" value="evening" >Evening<br>
 						<input class="time" type="radio" name="time" value="night" >Night<br>
 					</div>
-					<br />
-					<div class="button_01" style="padding-left:150px">
-						<a href="addPhoto.jsp">Upload Photo</a>
-					</div>
+					
 	            </div>           
         	</div>
         
