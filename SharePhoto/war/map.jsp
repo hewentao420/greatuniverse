@@ -155,17 +155,10 @@
 						<input class="time" type="radio" name="time" value="evening" >Evening<br>
 						<input class="time" type="radio" name="time" value="night" >Night<br>
 					</div>
-					<!-- <div id="keyword_box" style="padding-left:70px">
-						<h3>Keyword</h3>
-						<div>
-							<input id="keyword" type="text">
-							
-						</div>
+					<br />
+					<div class="button_01" style="padding-left:150px">
+						<a href="addPhoto.jsp">Upload Photo</a>
 					</div>
-					<div style="padding-left:70px">
-						<button id="update_ui">Search</button>
-					</div>
- -->
 	            </div>           
         	</div>
         

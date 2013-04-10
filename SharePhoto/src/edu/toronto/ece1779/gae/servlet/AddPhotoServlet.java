@@ -8,6 +8,7 @@ import java.nio.channels.Channels;
 import java.util.HashMap;
 import java.util.UUID;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.service.PhotoService;
 import edu.toronto.ece1779.gae.service.PhotoServiceImpl;
+import edu.toronto.ece1779.gae.util.Constants;
 
 public class AddPhotoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -167,6 +169,9 @@ public class AddPhotoServlet extends HttpServlet {
 			System.out.println("Exception::" + e.getMessage());
 			e.printStackTrace();
 		}
+		
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.MAP_JSP);
+		dispatcher.forward(request,response);
 		
 	}
 
