@@ -218,7 +218,7 @@
 			for ( var i = 0; i < pictures.length; i++) {
 				var box_content = '<div id=window_'+i+'>'
 						+ pictures[i].title
-						+ '<div><div style="text-align:center"><a href="/retrievePhotoDetailServlet?key=1"><img src="'+pictures[i].url_small+'" style="max-width:98px;border:1px solid;"></a></div>'
+						+ '<div><div style="text-align:center"><a href="/retrievePhotoDetailServlet?key='+pictures[i].imageKey+'"><img src="'+pictures[i].url_small+'" style="max-width:98px;border:1px solid;"></a></div>'
 				var myOptions = {
 					content : box_content,
 					disableAutoPan : false,

@@ -184,7 +184,8 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 										Description: <c:out value="${photo.description}"/><br/>
 										Rating:<br/>
 										
-										<%for(int i=0; i<%>${photo.rating}<%; i++){%>
+										<%-- <%for(int i=0; i<%>${photo.rating}<%; i++){%> --%>
+										<%for(int i=0; i<3; i++){%>
 											<span class="rating star"></span>
 										<%}%>
 										

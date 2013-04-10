@@ -1,11 +1,13 @@
 package edu.toronto.ece1779.gae.dao;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import edu.toronto.ece1779.gae.model.Comment;
@@ -62,15 +64,22 @@ public class CommentDAOImpl implements CommentDAO {
 		try {
 			em = emf.createEntityManager();
 			//em.getTransaction().begin();
-			//em.persist(comment); 
-			
-			//Query query = em.createQuery("UPDATE Photo p SET p.rating = " + averageRating + " AND p.commentedTimes = " + (previousCommentedTimes+1) + " WHERE p.imageKey = :imageKey");
-			Query query = em.createQuery("UPDATE Photo p SET p.rating = " + averageRating + " AND p.commentedTimes = " + (previousCommentedTimes+1) + " WHERE p.imageKey = :imageKey");
-			
-			query.setParameter("imageKey", comment.getImageId());
-		    query.executeUpdate(); 
-			
 			//em.getTransaction().commit();
+			em.persist(comment); 
+			
+			EntityTransaction txn = em.getTransaction();
+	        txn.begin();
+	        try {
+	        	Photo photo2 = em.find(Photo.class, comment.getImageId());
+	    		photo2.setRating(averageRating);
+	    		photo2.setCommentedTimes(previousCommentedTimes+1);
+	            txn.commit();
+	        } finally {
+	            if (txn.isActive()) {
+	                txn.rollback();
+	            }
+	        }			
+			
 		} catch (Exception e) {
 			System.out.print(e);
 		} finally {
