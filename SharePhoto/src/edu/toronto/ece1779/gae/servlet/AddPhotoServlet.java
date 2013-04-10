@@ -156,6 +156,9 @@ public class AddPhotoServlet extends HttpServlet {
 			photo.setUrl_small(fieldMap.get("url_small"));
 			photo.setNickName(user.getNickname());
 			
+			//add tags
+			
+			
 			PhotoService service = new PhotoServiceImpl();
 			service.addPhoto(photo);
 			

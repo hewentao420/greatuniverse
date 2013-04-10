@@ -1,6 +1,7 @@
 package edu.toronto.ece1779.gae.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -46,6 +47,8 @@ public class Photo implements Serializable {
 	private int rating;
 	@Basic
 	private int commentedTimes;
+	@Basic 
+	private List<String> tags;
 	
 
 	public void setImageKey(Long imageKey){
@@ -174,6 +177,14 @@ public class Photo implements Serializable {
 
 	public void setCommentedTimes(int commentedTimes) {
 		this.commentedTimes = commentedTimes;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 	
 }
