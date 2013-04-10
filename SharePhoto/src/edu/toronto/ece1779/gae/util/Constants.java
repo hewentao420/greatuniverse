@@ -14,11 +14,13 @@ public class Constants {
 	public static final String ISO = "iso";
 	public static final String SHUTTER_SPEED = "shutter_speed";
 	public static final String PHOTO = "photo";
+	public static final String PHOTO_LIST = "photoList";
 	
 	public static final String RATING = "rating";
 	public static final String COMMENT_LIST = "commentList";
 	public static final String COMMENT = "comment";
 	
 	public static final String PHOTO_VIEW_JSP = "/photoView.jsp";
+	public static final String USER_DETAILS_JSP = "/userDetails.jsp";
 	
 }

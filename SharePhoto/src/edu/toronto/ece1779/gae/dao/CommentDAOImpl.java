@@ -45,12 +45,32 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public void addComment(Comment comment) {
+		
+		PhotoDAO photoDAO = new PhotoDAOImpl();
+		Photo photo = photoDAO.retrievePhoto(comment.getImageId());
+		int previousRating = photo.getRating();
+		int previousCommentedTimes = photo.getCommentedTimes();
+		
+		int averageRating = (previousRating*previousCommentedTimes + comment.getRating())/(previousCommentedTimes+1);
+		
+		photo.setRating(averageRating);
+		photo.setCommentedTimes(previousCommentedTimes+1);
+		
 		EntityManagerFactory emf = EMF.get();
 		EntityManager em = null;
 
 		try {
 			em = emf.createEntityManager();
-			em.persist(comment);
+			//em.getTransaction().begin();
+			//em.persist(comment); 
+			
+			//Query query = em.createQuery("UPDATE Photo p SET p.rating = " + averageRating + " AND p.commentedTimes = " + (previousCommentedTimes+1) + " WHERE p.imageKey = :imageKey");
+			Query query = em.createQuery("UPDATE Photo p SET p.rating = " + averageRating + " AND p.commentedTimes = " + (previousCommentedTimes+1) + " WHERE p.imageKey = :imageKey");
+			
+			query.setParameter("imageKey", comment.getImageId());
+		    query.executeUpdate(); 
+			
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.print(e);
 		} finally {

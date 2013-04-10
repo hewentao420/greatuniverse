@@ -124,7 +124,9 @@
 		
 		<div id="templatemo_content">
 			<div class="content_section">
-				<div style="height:40px">Owner: <c:out value="${photo.nickName}"/></div>
+				<div style="height:40px">Owner: 
+					<a href="/retrieveUserPhotosServlet"><c:out value="${photo.nickName}"/></a>
+				</div>
 			</div>
 
 	        <div class="content_section">

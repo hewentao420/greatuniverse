@@ -42,7 +42,12 @@ public class Photo implements Serializable {
 	private String url_small;
 	@Basic
 	private String url_big;
+	@Basic
+	private int rating;
+	@Basic
+	private int commentedTimes;
 	
+
 	public void setImageKey(Long imageKey){
 		this.imageKey = imageKey;
 	}
@@ -153,6 +158,22 @@ public class Photo implements Serializable {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public int getCommentedTimes() {
+		return commentedTimes;
+	}
+
+	public void setCommentedTimes(int commentedTimes) {
+		this.commentedTimes = commentedTimes;
 	}
 	
 }

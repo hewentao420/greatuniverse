@@ -25,6 +25,7 @@ public class RetrievePhotoDetailServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		Long imageKey = Long.parseLong(request.getParameter(Constants.KEY));
+		System.out.println("Image Key: " + imageKey);
 		
 		PhotoService photoService = new PhotoServiceImpl();
 		Photo photo = photoService.retrievePhoto(imageKey);

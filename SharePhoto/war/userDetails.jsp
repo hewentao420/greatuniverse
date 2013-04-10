@@ -12,7 +12,10 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions"%>
 <%@ page import="com.google.appengine.api.datastore.Key"%>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
+
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link href="style.css" rel="stylesheet" type="text/css" />
@@ -166,98 +169,30 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 			</div>
 
 	        <div class="content_section">
-	        	<h2>Photos of David</h2>
+	        	<h2>Photos of <c:out value="${photo.nickName}"/></h2>
 	        	<div style="padding-top:20px;">
 	        		<div id="container">
-	        			<p>
-							<table>
-								<tr>
-									<th><a href="photoView.jsp"><img src="images/Achievements.jpg" /></a></th>
-									<th>
-										Name: David David David David<br/>
-										Description: Genius Genius Genius Genius Genius<br/>
-										Rating:<br/>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-									</th>
-								</tr>
-							</table>
-							</p>
-						<br />
+
+	                <c:forEach var="photo" items="${photoList}">
 						<p>
 							<table>
 								<tr>
-									<th><a href="photoView.jsp"><img src="images/Bw.jpg" /></a></th>
+									<th><a href="/retrievePhotoDetailServlet?key=${photo.imageKey}"><img src="images/Achievements.jpg" /></a></th>
+																		 <%-- <img src="${photo.url_big}"/> --%>
 									<th>
-										Name: David David David David<br/>
-										Description: Genius Genius Genius Genius Genius<br/>
+										Name: <c:out value="${photo.nickName}"/><br/>
+										Description: <c:out value="${photo.description}"/><br/>
 										Rating:<br/>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating unstar"></span>
+										
+										<%for(int i=0; i<%>${photo.rating}<%; i++){%>
+											<span class="rating star"></span>
+										<%}%>
+										
 									</th>
 								</tr>
 							</table>
-							</p>
-						<br />
-						<p>
-							<table>
-								<tr>
-									<th><a href="photoView.jsp"><img src="images/Camera.jpg" /></a></th>
-									<th>
-										Name: David David David David<br/>
-										Description: Genius Genius Genius Genius Genius<br/>
-										Rating:<br/>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating unstar"></span>
-										<span class="rating unstar"></span>
-									</th>
-								</tr>
-							</table>
-							</p>
-						<br />
-						<p>
-							<table>
-								<tr>
-									<th><a href="photoView.jsp"><img src="images/Cat-Dog.jpg" /></a></th>
-									<th>
-										Name: David David David David<br/>
-										Description: Genius Genius Genius Genius Genius<br/>
-										Rating:<br/>
-										<span class="rating star"></span>
-										<span class="rating star"></span>
-										<span class="rating unstar"></span>
-										<span class="rating unstar"></span>
-										<span class="rating unstar"></span>
-									</th>
-								</tr>
-							</table>
-							</p>
-						<br />
-						<p>
-							<table>
-								<tr>
-									<th><a href="photoView.jsp"><img src="images/CREATIV.jpg" /></a></th>
-									<th>
-										Name: David David David David<br/>
-										Description: Genius Genius Genius Genius Genius<br/>
-										Rating:<br/>
-										<span class="rating unstar"></span>
-										<span class="rating unstar"></span>
-										<span class="rating unstar"></span>
-										<span class="rating unstar"></span>
-										<span class="rating unstar"></span>
-									</th>
-								</tr>
-							</table>
-							</p>
+						</p>			
+					</c:forEach>
 
 					    <hr />
 					</div>

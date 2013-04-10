@@ -1,13 +1,18 @@
 package edu.toronto.ece1779.gae.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import edu.toronto.ece1779.gae.model.Photo;
+import edu.toronto.ece1779.gae.service.PhotoService;
+import edu.toronto.ece1779.gae.service.PhotoServiceImpl;
 import edu.toronto.ece1779.gae.util.Constants;
 
 public class RetrieveUserPhotosServlet extends HttpServlet {
@@ -16,18 +21,17 @@ public class RetrieveUserPhotosServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String userId = request.getParameter(Constants.USER_ID);
+		HttpSession session = request.getSession(true);
+		Photo photo = (Photo)session.getAttribute(Constants.PHOTO);
 		
-		//call service, pass in userId, return photos.
+		PhotoService photoService = new PhotoServiceImpl();
+		List<Photo> photoList = photoService.retrieveUserPhotos(photo.getUserId());
 		
-		//request.setAttribute(Constants.PHOTOS, photos);
+		request.setAttribute(Constants.PHOTO_LIST, photoList);
+		request.setAttribute(Constants.PHOTO, photo);
 		
-		String nextJSP = "/user.jsp";
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.USER_DETAILS_JSP);
 		dispatcher.forward(request,response);
-		
 	}
-
-
 
 }
