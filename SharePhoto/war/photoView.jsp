@@ -208,6 +208,11 @@
 		</div> <!-- end of sidebar -->
 
 		<div class="cleaner"></div>  
+		<div>
+			<div class="desc">Description: ${photo.description}</div>
+			<div class="desc" id="desc">Rating: ${photo.rating} / ${photo.commentedTimes}</div>
+			<div class="desc">Tags:${photo.tag1} ${photo.tag2} ${photo.tag3} ${photo.tag4} ${photo.tag5}</div>
+		</div>
 		</div><div id="templatemo_content_wrapper_bottom"></div> <!-- end of content_wrapper -->
 		<div id="templatemo_footer">
             Copyright ECE1779 Group 4 | <a href="http://www.utoronto.ca">University of Toronto</a> | 
