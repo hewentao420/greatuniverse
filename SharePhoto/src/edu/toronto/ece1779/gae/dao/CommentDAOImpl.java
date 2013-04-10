@@ -55,25 +55,24 @@ public class CommentDAOImpl implements CommentDAO {
 		
 		int averageRating = (previousRating*previousCommentedTimes + comment.getRating())/(previousCommentedTimes+1);
 		
-		photo.setRating(averageRating);
-		photo.setCommentedTimes(previousCommentedTimes+1);
-		
 		EntityManagerFactory emf = EMF.get();
 		EntityManager em = null;
-
+		EntityManager em2 = null;
+		
 		try {
-			em = emf.createEntityManager();
 			//em.getTransaction().begin();
-			//em.getTransaction().commit();
+			em = emf.createEntityManager();
 			em.persist(comment); 
 			
-			EntityTransaction txn = em.getTransaction();
+			em2 = emf.createEntityManager();
+			EntityTransaction txn = em2.getTransaction();
 	        txn.begin();
 	        try {
-	        	Photo photo2 = em.find(Photo.class, comment.getImageId());
+	        	Photo photo2 = em2.find(Photo.class, comment.getImageId());
 	    		photo2.setRating(averageRating);
 	    		photo2.setCommentedTimes(previousCommentedTimes+1);
 	            txn.commit();
+	          //em.getTransaction().commit();
 	        } finally {
 	            if (txn.isActive()) {
 	                txn.rollback();

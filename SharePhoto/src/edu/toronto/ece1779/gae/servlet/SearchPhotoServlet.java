@@ -40,7 +40,7 @@ public class SearchPhotoServlet extends HttpServlet {
         if(user == null){
         	userId = "";
         }else{
-        	userId = user.toString();
+        	userId = user.toString(); //TODO check its value
         }
         
         //get searchCriteria and/or update it in UserPrefs
@@ -102,7 +102,7 @@ public class SearchPhotoServlet extends HttpServlet {
 		double lng2 = Double.parseDouble(request.getParameter("lng2"));
 		System.out.println("\nParameters from UI - user: " + userId +"; weather: " + weather + " ;time: " + time + " ;keyword: " + keyword
 				+ " ;lat1: " + lat1 + " ;lat2: " + lat2 + " ;lng1: " + lng1 + " ;lng2: " + lng2);
-		searchCriteria = new SearchCriteria(userId, keyword, weather, time, lat1, lat2, lng1, lng2); 
+		searchCriteria = new SearchCriteria("", keyword, weather, time, lat1, lat2, lng1, lng2); 
 		return searchCriteria;
 	}
 	

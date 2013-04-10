@@ -124,26 +124,16 @@
 		
 		<div id="templatemo_content">
 			<div class="content_section">
-				<div style="height:40px">Owner: 
+				<div style="height:40px">Photo Owner: 
 					<a href="/retrieveUserPhotosServlet"><c:out value="${photo.nickName}"/></a>
 				</div>
 			</div>
 
 	        <div class="content_section">
 	        	<div style="padding-top:20px;">
-	        		<img src="images/test.jpg"/>
-	        		<%-- <img src="${photo.url_big}"/> --%>
+	        		<!-- <img src="images/test.jpg"/> -->
+	        		<img src="${photo.url_big}"/>
 	        	</div>
-			</div>
-			<div class="content_section">
-				<fieldset class="rating">
-				    <legend>Please rate:</legend>
-				    <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5</label>
-				    <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4</label>
-				    <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3</label>
-				    <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2</label>
-				    <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1</label>
-				</fieldset>
 			</div>
 			<div class="cleaner_h40"></div>
 		</div>
@@ -188,10 +178,21 @@
 						<c:out value="${comment.description}"/>(
 						<c:out value="${comment.rating}"/>)
 						<br />
-					</c:forEach>
-	       
-					<br />
+					</c:forEach>    
+	       		<br />
+				
 					<textarea name="comment" id="comment" rows="4" cols="30"></textarea><br />
+					
+					<fieldset class="rating">
+				    	<legend>Please rate:</legend>
+				    	<input type="radio" id="star5" name="rating" value="5" /><label for="star5">5</label>
+				    	<input type="radio" id="star4" name="rating" value="4" /><label for="star4">4</label>
+				    	<input type="radio" id="star3" name="rating" value="3" /><label for="star3">3</label>
+				    	<input type="radio" id="star2" name="rating" value="2" /><label for="star2">2</label>
+				    	<input type="radio" id="star1" name="rating" value="1" /><label for="star1">1</label>
+					</fieldset>
+				<br /><br />
+				
 						<div class="button_01">
 							<a href="javascript:;" onclick="document.getElementById('form1').submit();">Submit</a>
 							<input type="hidden" value="Submit" />
