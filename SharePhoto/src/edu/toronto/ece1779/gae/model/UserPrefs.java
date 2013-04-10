@@ -30,6 +30,10 @@ public class UserPrefs implements Serializable {
     @Basic
     private List<String> favouriteUserIdList;
     
+    public UserPrefs(String userId) {
+    	this.userId = userId;
+    }
+    
     public UserPrefs(User user) {
         this.userId = user.getUserId();
     }

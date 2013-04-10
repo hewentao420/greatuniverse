@@ -1,6 +1,7 @@
 package edu.toronto.ece1779.gae.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -19,6 +20,15 @@ import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.service.CommentService;
 import edu.toronto.ece1779.gae.service.CommentServiceImpl;
 import edu.toronto.ece1779.gae.util.Constants;
+
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 public class AddCommentServlet extends HttpServlet {
@@ -50,6 +60,8 @@ public class AddCommentServlet extends HttpServlet {
 		CommentService commentService = new CommentServiceImpl();
 		commentService.addComment(comment);
 		
+		sendEmailNotification(user, photo);
+		
 		List<Comment> commentList = commentService.retrieveComments(photo);
 		
 		request.setAttribute(Constants.PHOTO, photo);
@@ -58,5 +70,26 @@ public class AddCommentServlet extends HttpServlet {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.PHOTO_VIEW_JSP);
 		dispatcher.forward(request,response);
 	}
+	
+	private void sendEmailNotification(User user, Photo photo) {
+		Properties props = new Properties();
+		Session mailSession = Session.getDefaultInstance(props, null);    
+		Message msg = new MimeMessage(mailSession);
+		try {
+			msg.setFrom(new InternetAddress(Constants.SENDER_ADDRESS, Constants.SENDER_NAME));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(photo.getUserId()));
+			msg.setSubject(Constants.EMAIL_SUBJECT + "'" + photo.getTitle() + "'");
+				
+			msg.setText("Dear " + photo.getNickName() + ":" + "\n\n" + user.getNickname() + " has just commented on you photo " + "'" + photo.getTitle() + "'"  
+					+ ". Please visit our website for more details. \n\nRegards, \nPhotoTravel Team");
+				
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		    
+	} 
 	
 }

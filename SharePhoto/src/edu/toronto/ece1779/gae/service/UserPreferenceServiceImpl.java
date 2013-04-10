@@ -2,6 +2,7 @@ package edu.toronto.ece1779.gae.service;
 
 import edu.toronto.ece1779.gae.dao.UserPreferenceDAO;
 import edu.toronto.ece1779.gae.dao.UserPreferenceDAOImpl;
+import edu.toronto.ece1779.gae.model.UserPrefs;
 
 public class UserPreferenceServiceImpl implements UserPreferenceService {
 
@@ -19,6 +20,12 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 		UserPreferenceDAO userPreferenceDAO = new UserPreferenceDAOImpl();
 		isRemoved = userPreferenceDAO.manageFavouriteUser(ownerId, favouriteUserId, false);
 		return isRemoved;
+	}
+
+	@Override
+	public UserPrefs getUserPrefs(String userId) {
+		UserPreferenceDAO userPreferenceDAO = new UserPreferenceDAOImpl();
+		return userPreferenceDAO.getUserPrefs(userId);
 	}
 
 	

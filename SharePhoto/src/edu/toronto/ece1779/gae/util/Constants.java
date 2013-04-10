@@ -25,4 +25,7 @@ public class Constants {
 	public static final String PHOTO_VIEW_JSP = "/photoView.jsp";
 	public static final String USER_DETAILS_JSP = "/userDetails.jsp";
 	
+	public static final String SENDER_ADDRESS = "hewentao420@gmail.com";
+	public static final String SENDER_NAME = "PhotoTravel.com Admin";
+	public static final String EMAIL_SUBJECT = "New comment added to your photo ";
 }
