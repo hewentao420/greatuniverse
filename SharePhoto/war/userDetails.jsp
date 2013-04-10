@@ -150,7 +150,7 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 	        <div id="templatemo_menu">
 	            <ul>
 	                <li><a href="map.jsp" class="current">Home</a></li>
-	                <li><a href="#">Link1</a></li>
+	                <li><a href="addPhoto.jsp">Upload Photo</a></li>
 	                <li><a href="#">Contact</a></li>
 	            </ul>    	
 	        </div> <!-- end of templatemo_menu -->
@@ -182,13 +182,24 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 									<th>
 										Name: <c:out value="${photo.nickName}"/><br/>
 										Description: <c:out value="${photo.description}"/><br/>
-										Rating: <c:out value="${photo.rating}"/><br/>
 										
-										<%//int rate = Integer.parseInt(rating); %>
-										<%//for(int i=0; i<rate; i++){%>
-											<!--  <span class="rating star"></span> -->
-										<%//}%>
-																				 
+										<c:set var="rating" value="${photo.rating}"/>
+										<c:if test="${fn:startsWith(rating,'1') }">
+											<span class="rating star"></span>
+										</c:if>
+										<c:if test="${fn:startsWith(rating,'2') }">
+											<span class="rating star"></span><span class="rating star"></span>
+										</c:if>
+										<c:if test="${fn:startsWith(rating,'3') }">
+											<span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
+										</c:if>
+										<c:if test="${fn:startsWith(rating,'4') }">
+											<span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
+										</c:if>
+										<c:if test="${fn:startsWith(rating,'5') }">
+											<span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
+										</c:if>
+										 
 									</th>
 								</tr>
 							</table>

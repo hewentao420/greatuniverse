@@ -3,10 +3,13 @@ package edu.toronto.ece1779.gae.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.*;
+
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceException;
@@ -14,16 +17,18 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 import edu.toronto.ece1779.gae.dao.EMF;
 
-  
-@SuppressWarnings("serial")
 @Entity(name = "UserPrefs")
 public class UserPrefs implements Serializable {
-    @Transient
+	private static final long serialVersionUID = 1L;
+	
     private static Logger logger = Logger.getLogger(UserPrefs.class.getName());
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
-    private List<FavouriteUser> favouriteUsers;
+    
+    @Basic
+    private List<String> favouriteUserIdList;
     
     public UserPrefs(User user) {
         this.userId = user.getUserId();
@@ -36,16 +41,15 @@ public class UserPrefs implements Serializable {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
-	public List<FavouriteUser> getFavouriteUsers() {
-		return favouriteUsers;
-	}
-
-	public void setFavouriteUsers(List<FavouriteUser> favouriteUsers) {
-		this.favouriteUsers = favouriteUsers;
-	}
-
 	
+	public List<String> getFavouriteUserIdList() {
+		return favouriteUserIdList;
+	}
+
+	public void setFavouriteUserIdList(List<String> favouriteUserIdList) {
+		this.favouriteUserIdList = favouriteUserIdList;
+	}
+
 	@SuppressWarnings("unchecked")
     public static UserPrefs getPrefsForUser(User user) {
         UserPrefs userPrefs = null;
