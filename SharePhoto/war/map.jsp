@@ -137,6 +137,7 @@
 	                <h2>Filters</h2>
 					<div id="weathers" style="padding-left:70px">
 						<h3>Weather</h3>
+						<input class="weather" type="radio" name="weather" value="" >All<br>
 						<input class="weather" type="radio" name="weather" value="sunny" >Sunny<br>
 						<input class="weather" type="radio" name="weather" value="rainy" >Rainy<br>
 						<input class="weather" type="radio" name="weather" value="cloudy" >Cloudy<br>
@@ -144,6 +145,7 @@
 					</div>
 					<div id="time" style="padding-left:70px">
 						<h3 >Time</h3>
+						<input class="time" type="radio" name="time" value="" >All<br>
 						<input class="time" type="radio" name="time" value="morning" >Morning<br>
 						<input class="time" type="radio" name="time" value="noon" >Noon<br>
 						<input class="time" type="radio" name="time" value="afternoon" >Afternoon<br>
