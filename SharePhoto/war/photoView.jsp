@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="edu.toronto.ece1779.gae.model.Photo"%>
+<%@ page import="edu.toronto.ece1779.gae.util.Constants" %>
 <%@ page import="java.util.List"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
@@ -124,7 +126,7 @@
 		
 		<div id="templatemo_content">
 			<div class="content_section">
-				<div style="height:40px">Photo Owner: 
+				<div class="desc">Photo Owner: 
 					<a href="/retrieveUserPhotosServlet"><c:out value="${photo.nickName}"/></a>
 				</div>
 			</div>
@@ -211,7 +213,22 @@
 		<div>
 			<div class="desc">Description: ${photo.description}</div>
 			<div class="desc" id="desc">Rating: ${photo.rating} / ${photo.commentedTimes}</div>
-			<div class="desc">Tags:${photo.tag1} ${photo.tag2} ${photo.tag3} ${photo.tag4} ${photo.tag5}</div>
+			<%Photo photo = (Photo)request.getAttribute(Constants.PHOTO);
+			if(photo.getAperture().equals("Default")){}else{%>
+			<div class="desc">Aperture: ${photo.aperture}</div>
+			<%
+			}
+			if(photo.getShutterSpeed() == -1){
+			}else{ 
+			%>
+			<div class="desc">ShutterSpeed: ${photo.shutterSpeed}</div>
+			<%
+			} 
+			if(photo.getIso() == -1){}else{
+			%>
+			<div class="desc">ISO: ${photo.iso}</div>
+			<%} %>
+			<div class="desc">Tags: ${photo.tag1} ${photo.tag2} ${photo.tag3} ${photo.tag4} ${photo.tag5}</div>
 		</div>
 		</div><div id="templatemo_content_wrapper_bottom"></div> <!-- end of content_wrapper -->
 		<div id="templatemo_footer">

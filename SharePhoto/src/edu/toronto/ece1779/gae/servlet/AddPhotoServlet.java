@@ -48,41 +48,39 @@ public class AddPhotoServlet extends HttpServlet {
 	private String url_big;
 	private String url_small;
 
-	
-	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		
-		if(user == null) {	
-			//TODO: return msg: need to login
+
+		if (user == null) {
+			// TODO: return msg: need to login
 			return;
 		}
-		
+
 		// get upload data
 		ServletFileUpload upload = new ServletFileUpload();
 		FileItemIterator iter;
-		
+
 		try {
 			iter = upload.getItemIterator(request);
-			
+
 			HashMap<String, String> fieldMap = new HashMap<String, String>();
 			fieldMap.put("userId", user.getEmail());
-			
+
 			while (iter.hasNext()) {
 				FileItemStream item = iter.next();
-				
-				if(item.isFormField()) {
+
+				if (item.isFormField()) {
 					InputStream steam = item.openStream();
 					String fieldName = item.getFieldName();
 					String value = Streams.asString(steam);
-					System.out.println("fieldName: " + fieldName + "; value" + value);
+					System.out.println("fieldName: " + fieldName + "; value"
+							+ value);
 					fieldMap.put(fieldName, value);
 				}
-				
-				
+
 				String mime = item.getContentType();
 				if (mime == null) {
 					mime = "null";
@@ -98,7 +96,7 @@ public class AddPhotoServlet extends HttpServlet {
 							+ fileName;
 					url_small = "http://storage.googleapis.com/ece1779/"
 							+ smallFileName;
-					
+
 					fieldMap.put("url_big", url_big);
 					fieldMap.put("url_small", url_big);
 
@@ -136,75 +134,88 @@ public class AddPhotoServlet extends HttpServlet {
 
 				}
 			}
-			
-			//TODO potential null pointer exception below
+
+			// TODO potential null pointer exception below
 			Photo photo = new Photo();
 			photo.setUserId(user.getEmail());
-			photo.setIso(Integer.parseInt(fieldMap.get("iso")));
-			photo.setAperture(fieldMap.get("aperture"));
-			photo.setShutterSpeed(Integer.parseInt(fieldMap.get("shutter_speed")));
+			if (fieldMap.get("aperture").equals("")) {
+				photo.setAperture("Default");
+			} else {
+				photo.setAperture(fieldMap.get("aperture"));
+			}
+			if (fieldMap.get("shutter_speed").equals("")) {
+				photo.setShutterSpeed(-1);
+			} else {
+				photo.setShutterSpeed(Integer.parseInt(fieldMap
+						.get("shutter_speed")));
+			}
+			if (fieldMap.get("iso").equals("")) {
+				photo.setIso(-1);
+			} else {
+				photo.setIso(Integer.parseInt(fieldMap.get("iso")));
+			}
 			photo.setTime(fieldMap.get("time"));
 			photo.setWeather(fieldMap.get("weather"));
 			photo.setTitle(fieldMap.get("title"));
 			photo.setDescription(fieldMap.get("description"));
 			photo.setLatitude(Double.parseDouble(fieldMap.get("latitude")));
-			photo.setLongitude(Double.parseDouble(fieldMap.get("longitude")));;
+			photo.setLongitude(Double.parseDouble(fieldMap.get("longitude")));
+			;
 			photo.setUrl_big(fieldMap.get("url_big"));
 			photo.setUrl_small(fieldMap.get("url_small"));
 			photo.setNickName(user.getNickname());
-			
-			//add tags
+
+			// add tags
 			String tagsStr = fieldMap.get("tags");
 			String[] tags = tagsStr.split(",");
-			
+
 			setTags(photo, tags);
-			
+
 			PhotoService service = new PhotoServiceImpl();
 			service.addPhoto(photo);
-			
+
 			updateMemcache(photo);
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 			System.out.println("Exception::" + e.getMessage());
 			e.printStackTrace();
 		}
-		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.MAP_JSP);
-		dispatcher.forward(request,response);
-		
-	}
 
+		RequestDispatcher dispatcher = getServletContext()
+				.getRequestDispatcher(Constants.MAP_JSP);
+		dispatcher.forward(request, response);
+
+	}
 
 	private void updateMemcache(Photo photo) {
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-	    syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
-    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(Constants.COMMON_SEARCH_RESULT);
-    	if(searchResultInMemcache != null) {
-    		searchResultInMemcache.add(photo);
-			syncCache.put(Constants.COMMON_SEARCH_RESULT, searchResultInMemcache);
-    	}
+		syncCache.setErrorHandler(ErrorHandlers
+				.getConsistentLogAndContinue(Level.INFO));
+		List<Photo> searchResultInMemcache = (List<Photo>) syncCache
+				.get(Constants.COMMON_SEARCH_RESULT);
+		if (searchResultInMemcache != null) {
+			searchResultInMemcache.add(photo);
+			syncCache.put(Constants.COMMON_SEARCH_RESULT,
+					searchResultInMemcache);
+		}
 	}
 
 	private void setTags(Photo photo, String[] tags) {
-		if(tags.length == 1 && !tags[0].equals("")) {
+		if (tags.length == 1 && !tags[0].equals("")) {
 			photo.setTag1(tags[0]);
-		}
-		else if(tags.length == 2) {
+		} else if (tags.length == 2) {
 			photo.setTag1(tags[0]);
 			photo.setTag2(tags[1]);
-		}
-		else if(tags.length == 3) {
+		} else if (tags.length == 3) {
 			photo.setTag1(tags[0]);
 			photo.setTag2(tags[1]);
 			photo.setTag3(tags[2]);
-		}
-		else if(tags.length == 4) {
+		} else if (tags.length == 4) {
 			photo.setTag1(tags[0]);
 			photo.setTag2(tags[1]);
 			photo.setTag3(tags[2]);
 			photo.setTag4(tags[3]);
-		}
-		else if(tags.length == 5) {
+		} else if (tags.length == 5) {
 			photo.setTag1(tags[0]);
 			photo.setTag2(tags[1]);
 			photo.setTag3(tags[2]);

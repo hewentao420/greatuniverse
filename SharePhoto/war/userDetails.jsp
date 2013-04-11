@@ -185,19 +185,19 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAQAAADI+Ww
 										Rating:
 										<c:set var="rating" value="${photo.rating}"/>
 										<c:if test="${fn:startsWith(rating,'1') }">
-											<span class="rating star"></span>
+											<br/><span class="rating star"></span>
 										</c:if>
 										<c:if test="${fn:startsWith(rating,'2') }">
-											<span class="rating star"></span><span class="rating star"></span>
+											<br/><span class="rating star"></span><span class="rating star"></span>
 										</c:if>
 										<c:if test="${fn:startsWith(rating,'3') }">
-											<span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
+											<br/><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
 										</c:if>
 										<c:if test="${fn:startsWith(rating,'4') }">
-											<span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
+											<br/><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
 										</c:if>
 										<c:if test="${fn:startsWith(rating,'5') }">
-											<span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
+											<br/><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span><span class="rating star"></span>
 										</c:if>
 										<br/>
 										Tags: ${photo.tag1} ${photo.tag2} ${photo.tag3} ${photo.tag4} ${photo.tag5} 			 
