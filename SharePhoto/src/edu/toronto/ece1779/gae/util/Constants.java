@@ -19,7 +19,7 @@ public class Constants {
 	public static final String RATING = "rating";
 	public static final String COMMENT_LIST = "commentList";
 	public static final String COMMENT = "comment";
-	
+	public static final String COMMON_SEARCH_RESULT = "commonSearchResult";
 	
 	public static final String MAP_JSP = "/map.jsp";
 	public static final String PHOTO_VIEW_JSP = "/photoView.jsp";

@@ -20,6 +20,7 @@ import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.model.SearchCriteria;
 import edu.toronto.ece1779.gae.service.PhotoService;
 import edu.toronto.ece1779.gae.service.PhotoServiceImpl;
+import edu.toronto.ece1779.gae.util.Constants;
 
 public class SearchPhotoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,22 +34,20 @@ public class SearchPhotoServlet extends HttpServlet {
         	 
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 	    syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
-	    String key = "commonSearchResult";
+	    
 	    List<Photo> searchResult;
 	
-	    if(searchCriteria.isCommonSearchCriteria()){
-	    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(key);
+	    if(searchCriteria.isCommonSearchCriteria()){//TODO need to fix the values of lat & lnt the first time user login
+	    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(Constants.COMMON_SEARCH_RESULT);
 	    	if(searchResultInMemcache == null) {
-	    		//SearchCriteria commonSearchCriteria = new SearchCriteria("", "", "", "", 0, 0, 0, 0);
 				PhotoService photoService = new PhotoServiceImpl();
 				searchResultInMemcache = photoService.searchPhotos(searchCriteria);
-				syncCache.put(key, searchResultInMemcache);
+				syncCache.put(Constants.COMMON_SEARCH_RESULT, searchResultInMemcache);
 	    	}
-	    	searchResult = filterUnMatched(searchResultInMemcache, searchCriteria);
+	    	searchResult = searchResultInMemcache;
 	    } else {
 			PhotoService photoService = new PhotoServiceImpl();
 			searchResult = photoService.searchPhotos(searchCriteria);
-	    	//syncCache.put(key, searchResult);
 	    }
 	   		
 		//construct json object
@@ -77,22 +76,6 @@ public class SearchPhotoServlet extends HttpServlet {
 		return searchCriteria;
 	}
 	
-	
-	public List<Photo> filterUnMatched(List<Photo> searchResultInMemcache, SearchCriteria searchCriteria){
-		List<Photo> searchResult = new ArrayList<Photo>(); 
-		if(searchResultInMemcache != null) {
-			for(int i=0; i<searchResultInMemcache.size(); i++) {
-				Photo photo = searchResultInMemcache.get(i);
-				if(photo.getLatitude() >= searchCriteria.getLatitudeFrom() 
-						&& photo.getLatitude() <= searchCriteria.getLatitudeTo()
-						&& photo.getLongitude() >= searchCriteria.getLongitudeFrom()
-						&& photo.getLongitude() <= searchCriteria.getLongitudeTo()) {
-					searchResult.add(photo);
-				}
-			}
-		}
-		return searchResult;
-	}
 	
 	
 	public void ClearCache(HttpServletResponse response) {

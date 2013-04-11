@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.Channels;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +26,9 @@ import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
 import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
+import com.google.appengine.api.memcache.ErrorHandlers;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -51,8 +56,7 @@ public class AddPhotoServlet extends HttpServlet {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		
-		if(user == null) {
-			
+		if(user == null) {	
 			//TODO: return msg: need to login
 			return;
 		}
@@ -97,11 +101,6 @@ public class AddPhotoServlet extends HttpServlet {
 					
 					fieldMap.put("url_big", url_big);
 					fieldMap.put("url_small", url_big);
-					
-					// response.getWriter().println(fileName);
-					// response.getWriter().println("\n");
-					// response.getWriter().println(url_big);
-					// response.getWriter().println("\n");
 
 					InputStream is = new BufferedInputStream(item.openStream());
 
@@ -136,8 +135,6 @@ public class AddPhotoServlet extends HttpServlet {
 					is.close();
 
 				}
-				
-				//response.sendRedirect("/addPhoto.jsp");
 			}
 			
 			//TODO potential null pointer exception below
@@ -165,6 +162,7 @@ public class AddPhotoServlet extends HttpServlet {
 			PhotoService service = new PhotoServiceImpl();
 			service.addPhoto(photo);
 			
+			updateMemcache(photo);
 		} catch (Exception e) {
 			e.printStackTrace(response.getWriter());
 			System.out.println("Exception::" + e.getMessage());
@@ -177,6 +175,15 @@ public class AddPhotoServlet extends HttpServlet {
 	}
 
 
+	private void updateMemcache(Photo photo) {
+		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	    syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(Constants.COMMON_SEARCH_RESULT);
+    	if(searchResultInMemcache != null) {
+    		searchResultInMemcache.add(photo);
+			syncCache.put(Constants.COMMON_SEARCH_RESULT, searchResultInMemcache);
+    	}
+	}
 
 	private void setTags(Photo photo, String[] tags) {
 		if(tags.length == 1 && !tags[0].equals("")) {
