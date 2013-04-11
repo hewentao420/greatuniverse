@@ -355,7 +355,12 @@
 			});
 
 			//wait some time to init the map. Fix the bug that map.getBounds returns null
-			window.setTimeout(getPhotos, 200);
+			var url = 'searchPhotoServlet';
+			var params = 'weather=' + weather + '&time=' + time + '&lat1='
+				+ south_west_lat + '&lat2=' + north_east_lat + '&lng1='
+				+ south_west_lng + '&lng2=' + north_east_lng + '&keyword='
+				+ keyword;
+			httpGet(url, "GET", params);
 		});
 	</script>
 </body>
