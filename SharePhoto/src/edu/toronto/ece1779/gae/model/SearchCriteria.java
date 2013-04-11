@@ -82,10 +82,10 @@ public class SearchCriteria {
 				&& "".equals(keyword)
 				&& "".equals(weather)
 				&& "".equals(time)
-				&& latitudeFrom==0
-				&& latitudeTo==0
-				&& longitudeFrom==0
-				&& longitudeTo==0)
+				&& latitudeFrom==-90.0
+				&& latitudeTo==90.0
+				&& longitudeFrom==-180.0
+				&& longitudeTo==180.0)
 			return true;
 		return false;
 	}

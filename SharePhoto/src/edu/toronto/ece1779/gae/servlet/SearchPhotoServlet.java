@@ -37,7 +37,7 @@ public class SearchPhotoServlet extends HttpServlet {
 	    
 	    List<Photo> searchResult;
 	
-	    if(searchCriteria.isCommonSearchCriteria()){//TODO need to fix the values of lat & lnt the first time user login
+	    if(searchCriteria.isCommonSearchCriteria()){
 	    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(Constants.COMMON_SEARCH_RESULT);
 	    	if(searchResultInMemcache == null) {
 				PhotoService photoService = new PhotoServiceImpl();
