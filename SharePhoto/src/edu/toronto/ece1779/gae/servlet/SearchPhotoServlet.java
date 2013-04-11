@@ -15,13 +15,9 @@ import net.sf.json.JSONArray;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 
 import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.model.SearchCriteria;
-import edu.toronto.ece1779.gae.model.UserPrefs;
 import edu.toronto.ece1779.gae.service.PhotoService;
 import edu.toronto.ece1779.gae.service.PhotoServiceImpl;
 
@@ -32,32 +28,9 @@ public class SearchPhotoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		ClearCache(response);
-		
-		//get user
-		UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-        String userId = null;
-        if(user == null){
-        	userId = "";
-        }else{
-        	userId = user.toString(); //TODO check its value
-        }
         
-        //get searchCriteria and/or update it in UserPrefs
-        SearchCriteria searchCriteria;
-        if(false) {//TODO determine if it's the first time searching after login
-        	 UserPrefs userPrefs = UserPrefs.getPrefsForUser(user);
-        	 //searchCriteria = userPrefs.getSearchCriteria();
-        } else {
-        	 searchCriteria = constructSearchCriteriaFromRequest(request, userId);
-        	 //TODO update userPrefs
-        	 //UserPrefs userPrefs = UserPrefs.getPrefsForUser(user);
-        	 //userPrefs.setSearchCriteria(searchCriteria);
-        	 //userPrefs.save();
-        }
-       
-
-        //get searchResult and/or update it in memcache
+        SearchCriteria searchCriteria = constructSearchCriteriaFromRequest(request);
+        	 
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 	    syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 	    String key = "commonSearchResult";
@@ -66,21 +39,16 @@ public class SearchPhotoServlet extends HttpServlet {
 	    if(searchCriteria.isCommonSearchCriteria()){
 	    	List<Photo> searchResultInMemcache = (List<Photo>) syncCache.get(key);
 	    	if(searchResultInMemcache == null) {
-	    		SearchCriteria commonSearchCriteria = new SearchCriteria("", "", "", "", 0, 0, 0, 0);
+	    		//SearchCriteria commonSearchCriteria = new SearchCriteria("", "", "", "", 0, 0, 0, 0);
 				PhotoService photoService = new PhotoServiceImpl();
-				searchResultInMemcache = photoService.searchPhotos(commonSearchCriteria);
+				searchResultInMemcache = photoService.searchPhotos(searchCriteria);
 				syncCache.put(key, searchResultInMemcache);
 	    	}
 	    	searchResult = filterUnMatched(searchResultInMemcache, searchCriteria);
 	    } else {
 			PhotoService photoService = new PhotoServiceImpl();
-
 			searchResult = photoService.searchPhotos(searchCriteria);
-	    	syncCache.put(key, searchResult);
-	    	
-	    	if(((List<Photo>)syncCache.get(key)).size()>0) {
-	    		System.out.println("Description in cache: " + ((List<Photo>)syncCache.get(key)).get(0).getDescription());
-	    	}
+	    	//syncCache.put(key, searchResult);
 	    }
 	   		
 		//construct json object
@@ -93,7 +61,7 @@ public class SearchPhotoServlet extends HttpServlet {
 	}
 
 	
-	public SearchCriteria constructSearchCriteriaFromRequest(HttpServletRequest request, String userId) {
+	public SearchCriteria constructSearchCriteriaFromRequest(HttpServletRequest request) {
 		SearchCriteria searchCriteria = new SearchCriteria();
 		//parse the request, construct the search criteria object
 		String weather = request.getParameter("weather");
@@ -103,7 +71,7 @@ public class SearchPhotoServlet extends HttpServlet {
 		double lat2 = Double.parseDouble(request.getParameter("lat2"));
 		double lng1 = Double.parseDouble(request.getParameter("lng1"));
 		double lng2 = Double.parseDouble(request.getParameter("lng2"));
-		System.out.println("\nParameters from UI - user: " + userId +"; weather: " + weather + " ;time: " + time + " ;keyword: " + keyword
+		System.out.println("\nParameters from UI - weather: " + weather + " ;time: " + time + " ;keyword: " + keyword
 				+ " ;lat1: " + lat1 + " ;lat2: " + lat2 + " ;lng1: " + lng1 + " ;lng2: " + lng2);
 		searchCriteria = new SearchCriteria("", keyword, weather, time, lat1, lat2, lng1, lng2); 
 		return searchCriteria;
@@ -118,7 +86,7 @@ public class SearchPhotoServlet extends HttpServlet {
 				if(photo.getLatitude() >= searchCriteria.getLatitudeFrom() 
 						&& photo.getLatitude() <= searchCriteria.getLatitudeTo()
 						&& photo.getLongitude() >= searchCriteria.getLongitudeFrom()
-						&& photo.getLongitude() <= searchCriteria.getLongitudeTo()) {//TODO and keyword?
+						&& photo.getLongitude() <= searchCriteria.getLongitudeTo()) {
 					searchResult.add(photo);
 				}
 			}

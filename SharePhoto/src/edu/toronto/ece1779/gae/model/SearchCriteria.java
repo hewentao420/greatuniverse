@@ -78,8 +78,14 @@ public class SearchCriteria {
 	}
 	
 	public boolean isCommonSearchCriteria() {
-		if("Sunny".equals(weather)
-				&& "Morning".equals(time))
+		if("".equals(userName)
+				&& "".equals(keyword)
+				&& "".equals(weather)
+				&& "".equals(time)
+				&& latitudeFrom==0
+				&& latitudeTo==0
+				&& longitudeFrom==0
+				&& longitudeTo==0)
 			return true;
 		return false;
 	}
