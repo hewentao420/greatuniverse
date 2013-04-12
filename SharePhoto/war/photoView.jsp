@@ -212,7 +212,7 @@
 		<div class="cleaner"></div>  
 		<div>
 			<div class="desc">Description: ${photo.description}</div>
-			<div class="desc" id="desc">Rating: ${photo.rating} / ${photo.commentedTimes}</div>
+			<div class="desc" id="desc">Average Rating: ${photo.rating} | ${photo.commentedTimes} comments</div>
 			<%Photo photo = (Photo)request.getAttribute(Constants.PHOTO);
 			if(photo.getAperture().equals("Default")){}else{%>
 			<div class="desc">Aperture: ${photo.aperture}</div>
