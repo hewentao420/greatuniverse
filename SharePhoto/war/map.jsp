@@ -241,8 +241,10 @@
 				});
 
 				//open their infowindows to show the pictures
-				infowindows[i].open(map, markers[i]);
-				infowindowsOpen[i] = true;
+				if(i<5){
+					infowindows[i].open(map, markers[i]);
+					infowindowsOpen[i] = true;
+				}
 
 				//when a marker is clicked, open a new infowindow if the window is not open
 				google.maps.event.addListener(markers[i], 'click', (function(
