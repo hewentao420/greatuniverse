@@ -55,7 +55,10 @@ public class AddPhotoServlet extends HttpServlet {
 		User user = userService.getCurrentUser();
 
 		if (user == null) {
-			// TODO: return msg: need to login
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().write("Please login first...");
+			response.getWriter().flush();
+			response.getWriter().close();
 			return;
 		}
 

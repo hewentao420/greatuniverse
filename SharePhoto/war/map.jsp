@@ -93,7 +93,7 @@
 			</div>
 
 	        <div class="content_section">
-	        	<h2>World Map</h2>
+	        	<h2 id="map_title">World Map</h2>
 	        	<div id="map"></div>
 				<div class="cleaner"></div>
 			</div>
@@ -191,7 +191,7 @@
 		var map = new google.maps.Map(document.getElementById('map'), {
 			zoom : 2,
 			center : new google.maps.LatLng(-0, 0),
-			mapTypeId : google.maps.MapTypeId.ROADMAP
+			mapTypeId : google.maps.MapTypeId.HYBRID  
 		});
 
 		//objects on the map
@@ -264,6 +264,9 @@
 							}
 						})(infowindows, i));
 			}
+			
+
+			$("#map_title").html("World Map");
 		}
 
 		//ajax controll
@@ -283,6 +286,7 @@
 
 		//start ajax request
 		function httpGet(url, method, data) {
+			$("#map_title").html("World Map (Loading...)");
 			getHttpRequest();
 			xmlhttp.open(method, url + "?" + data, true);
 			xmlhttp.setRequestHeader("Content-Type",
@@ -312,6 +316,7 @@
 					update_ui();
 				}
 			}
+			
 		}
 
 		//main function, call to send ajax request and update the map
