@@ -241,7 +241,7 @@
 				});
 
 				//open their infowindows to show the pictures
-				if(i<5){
+				if(i<20){
 					infowindows[i].open(map, markers[i]);
 					infowindowsOpen[i] = true;
 				}
