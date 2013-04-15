@@ -1,10 +1,7 @@
 package edu.toronto.ece1779.gae.servlet;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.channels.Channels;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -21,11 +18,6 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 
-import com.google.appengine.api.files.AppEngineFile;
-import com.google.appengine.api.files.FileService;
-import com.google.appengine.api.files.FileServiceFactory;
-import com.google.appengine.api.files.FileWriteChannel;
-import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -40,8 +32,6 @@ import edu.toronto.ece1779.gae.util.Constants;
 
 public class AddPhotoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static int BUFFER_SIZE = 1024;
-	private String BUCKETNAME = "ece1779";
 	private String random_ID;
 	private String fileName;
 	private String smallFileName;
@@ -103,42 +93,11 @@ public class AddPhotoServlet extends HttpServlet {
 					fieldMap.put("url_big", url_big);
 					fieldMap.put("url_small", url_big);
 
-					InputStream is = new BufferedInputStream(item.openStream());
-
-					byte[] b = new byte[BUFFER_SIZE];
-
-					// store the photo to the google cloud storage
-					FileService fileService = FileServiceFactory
-							.getFileService();
-					GSFileOptionsBuilder optionsBuilder = new GSFileOptionsBuilder()
-							.setBucket(BUCKETNAME).setKey(fileName)
-							.setMimeType("image/jpeg").setAcl("public_read")
-							.addUserMetadata("myfield1", "my field value");
-					AppEngineFile writableFile = fileService
-							.createNewGSFile(optionsBuilder.build());
-
-					// Open a channel to write to it
-					boolean lock = true;
-					FileWriteChannel writeChannel = fileService
-							.openWriteChannel(writableFile, lock);
-
-					int readBytes = is.read(b, 0, BUFFER_SIZE);
-					OutputStream os = Channels.newOutputStream(writeChannel);
-					while (readBytes > 0) {
-						// writeChannel.write(ByteBuffer.wrap(b));
-						os.write(b, 0, readBytes);
-						os.flush();
-						readBytes = is.read(b, 0, BUFFER_SIZE);
-					}
-
-					// Now finalize
-					writeChannel.closeFinally();
-					is.close();
-
+					PhotoService photoService = new PhotoServiceImpl();
+					photoService.uploadPhotoToCloudStorage(fileName, item);
 				}
 			}
 
-			// TODO potential null pointer exception below
 			Photo photo = new Photo();
 			photo.setUserId(user.getEmail());
 			if (fieldMap.get("aperture").equals("")) {
@@ -190,6 +149,7 @@ public class AddPhotoServlet extends HttpServlet {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void updateMemcache(Photo photo) {
 		MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 		syncCache.setErrorHandler(ErrorHandlers

@@ -1,27 +1,37 @@
 package edu.toronto.ece1779.gae.dao;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.Channels;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.datastore.Key;
+import org.apache.commons.fileupload.FileItemStream;
 
-import edu.toronto.ece1779.gae.model.Comment;
+import com.google.appengine.api.files.AppEngineFile;
+import com.google.appengine.api.files.FileService;
+import com.google.appengine.api.files.FileServiceFactory;
+import com.google.appengine.api.files.FileWriteChannel;
+import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
+
 import edu.toronto.ece1779.gae.model.Photo;
 import edu.toronto.ece1779.gae.model.SearchCriteria;
 
 public class PhotoDAOImpl implements PhotoDAO {
 
+	private static int BUFFER_SIZE = 1024;
+	private String BUCKETNAME = "ece1779";
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Photo> searchPhotos(SearchCriteria searchCriteria) {
-		// TODO Auto-generated method stub
 
 		List<Photo> photoList = new ArrayList<Photo>();
 		EntityManagerFactory emf = EMF.get();
@@ -51,7 +61,6 @@ public class PhotoDAOImpl implements PhotoDAO {
 			timeList.add(searchCriteria.getTime());
 		}
 
-		//TODO: Only one inequality supported in GAE, Try another method
 		String sql = "SELECT p from Photo p"
 				+ " WHERE p.weather IN (:weatherList)"
 				+ " AND p.time in(:timeList)"
@@ -110,98 +119,8 @@ public class PhotoDAOImpl implements PhotoDAO {
 		}
 		
 		return photoList;
-		
-		/*
-		List<String> weatherList = new ArrayList<String>();
-		List<String> timeList = new ArrayList<String>();
-
-		weatherList.add("'timeList'");
-		weatherList.add("'timeList'");
-		weatherList.add("'timeList'");
-		weatherList.add("'timeList'");
-
-		timeList.add("'morning'");
-		timeList.add("'noon'");
-		timeList.add("'afternoon'");
-		timeList.add("'evening'");
-		timeList.add("'night'");
-
-		try {
-			if (searchCriteria.getUserName().equals("")) {
-				if (searchCriteria.getKeyword().equals("")) {
-					query = em.createQuery("SELECT p from Photo p"
-							+ " WHERE p.weather IN (:weatherList)"
-							+ " AND p.time in(:timeList)"
-							+ " AND p.latitude > :latitudeFrom"
-							+ " AND p.latitude < :latitudeFrom"
-							+ " AND p.longitude > :longitudeFrom"
-							+ " AND p.longitude < :longitudeTo");
-				} else {
-					query = em.createQuery("SELECT p from Photo p"
-							+ " WHERE p.weather IN (:weatherList)"
-							+ " AND p.time in(:timeList)"
-							+ " AND p.latitude > :latitudeFrom"
-							+ " AND p.latitude < :latitudeFrom"
-							+ " AND p.longitude > :longitudeFrom"
-							+ " AND p.longitude < :longitudeTo"
-							+ " AND p.keyword LIKE :keyword");
-					query.setParameter("keyword",
-							"'" + "%" + searchCriteria.getKeyword() + "%" + "'");
-
-				}
-			} else {
-				if (searchCriteria.getKeyword().equals("")) {
-					query = em.createQuery("SELECT p from Photo p"
-							+ " WHERE p.weather IN (:weatherList)"
-							+ " AND p.time in(:timeList)"
-							+ " AND p.latitude > :latitudeFrom"
-							+ " AND p.latitude < :latitudeFrom"
-							+ " AND p.longitude > :longitudeFrom"
-							+ " AND p.longitude < :longitudeTo"
-							+ " AND p.userId = :userName");
-					query.setParameter("userName", searchCriteria.getUserName());
-				} else {
-					query = em.createQuery("SELECT p from Photo p"
-							+ " WHERE p.weather IN (:weatherList)"
-							+ " AND p.time in(:timeList)"
-							+ " AND p.latitude > :latitudeFrom"
-							+ " AND p.latitude < :latitudeFrom"
-							+ " AND p.longitude > :longitudeFrom"
-							+ " AND p.longitude < :longitudeTo"
-							+ " AND p.keyword LIKE :keyword"
-							+ " AND p.userId = :userName");
-					query.setParameter("keyword",
-							"'" + "%" + searchCriteria.getKeyword() + "%" + "'");
-					query.setParameter("userName", searchCriteria.getUserName());
-				}
-			}
-			if (searchCriteria.getWeather().equals("")) {
-				query.setParameter("weatherList", weatherList);
-			} else {
-				query.setParameter("weatherList",
-						"'" + searchCriteria.getWeather() + "'");
-			}
-			if (searchCriteria.getTime().equals("")) {
-				query.setParameter("timeList", timeList);
-			} else {
-				query.setParameter("timeList", "'" + searchCriteria.getTime()
-						+ "'");
-			}
-			query.setParameter("latitudeFrom", searchCriteria.getLatitudeFrom());
-			query.setParameter("latitudeTo", searchCriteria.getLatitudeTo());
-			query.setParameter("longitudeFrom",
-					searchCriteria.getLongitudeFrom());
-			query.setParameter("longitudeTo", searchCriteria.getLongitudeTo());
-
-			photoList = (List<Photo>) query.getResultList();
-		} finally {
-			em.close();
-		}
-	
-		return photoList;
-		*/
 	}
-
+	
 
 	@Override
 	public void addPhoto(Photo photo) {
@@ -273,5 +192,41 @@ public class PhotoDAOImpl implements PhotoDAO {
 		}
 
 		return photoList;
+	}
+	
+	
+	@Override
+	public void uploadPhotoToCloudStorage(String fileName, FileItemStream item) throws IOException{
+		InputStream is = new BufferedInputStream(item.openStream());
+
+		byte[] b = new byte[BUFFER_SIZE];
+
+		// store the photo to the google cloud storage
+		FileService fileService = FileServiceFactory
+				.getFileService();
+		GSFileOptionsBuilder optionsBuilder = new GSFileOptionsBuilder()
+				.setBucket(BUCKETNAME).setKey(fileName)
+				.setMimeType("image/jpeg").setAcl("public_read")
+				.addUserMetadata("myfield1", "my field value");
+		AppEngineFile writableFile = fileService
+				.createNewGSFile(optionsBuilder.build());
+
+		// Open a channel to write to it
+		boolean lock = true;
+		FileWriteChannel writeChannel = fileService
+				.openWriteChannel(writableFile, lock);
+
+		int readBytes = is.read(b, 0, BUFFER_SIZE);
+		OutputStream os = Channels.newOutputStream(writeChannel);
+		while (readBytes > 0) {
+			// writeChannel.write(ByteBuffer.wrap(b));
+			os.write(b, 0, readBytes);
+			os.flush();
+			readBytes = is.read(b, 0, BUFFER_SIZE);
+		}
+
+		// Now finalize
+		writeChannel.closeFinally();
+		is.close();		
 	}
 }

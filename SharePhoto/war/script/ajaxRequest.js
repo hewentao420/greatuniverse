@@ -39,7 +39,6 @@ function callback()
        {     
            var xmlDoc=xmlhttp.responseText;
            var data=eval(xmlDoc);
-           //Jason: Marcy, you have all the data passed to UI. Below I'm just printing a few attributes for testing purpose.
            document.getElementById("showout").innerHTML+=data[0].userId+","+data[0].title+","+data[0].description+","+data[0].url_small+"<br>";
            document.getElementById("showout").innerHTML+=data[1].userId+","+data[1].title+","+data[1].description+","+data[1].url_small+"<br>";
        }
