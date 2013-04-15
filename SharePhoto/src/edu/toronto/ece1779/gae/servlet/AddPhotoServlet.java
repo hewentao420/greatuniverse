@@ -44,14 +44,6 @@ public class AddPhotoServlet extends HttpServlet {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 
-		if (user == null) {
-			response.setCharacterEncoding("utf-8");
-			response.getWriter().write("Please login first...");
-			response.getWriter().flush();
-			response.getWriter().close();
-			return;
-		}
-
 		// get upload data
 		ServletFileUpload upload = new ServletFileUpload();
 		FileItemIterator iter;

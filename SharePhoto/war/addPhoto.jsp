@@ -279,6 +279,15 @@
 			var fileTArr=fileArr[fileArr.length-1].toLowerCase().split("."); 
 			var filetype=fileTArr[fileTArr.length-1]; 
 
+			<%
+			if (user == null) {
+			%>
+				alert("Please login first in order to upload photos.");
+				return;
+			<%
+				} 
+			%>
+			
 			if (title == "" || description == "" || latitude == "") {
 				alert("You must input a title, description and set a location before submit!");
 				if (filepath == "") {
@@ -294,5 +303,13 @@
 		});
 		
 	});
+	
+	<%
+	if (user == null) {
+	%>
+		alert("Please login first in order to upload photos.");
+	<%
+		} 
+	%>
 </script>
 </html>
