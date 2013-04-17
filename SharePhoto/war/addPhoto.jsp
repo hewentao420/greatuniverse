@@ -24,6 +24,8 @@
 	
 </script>
 <script src="js/jquery-1.9.1.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/jquery.fancybox.pack.js"></script>
 <script language="javascript" type="text/javascript">
 	function clearText(field) {
 		if (field.defaultValue == field.value)
@@ -31,6 +33,10 @@
 		else if (field.value == '')
 			field.value = field.defaultValue;
 	}
+
+	$(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
 
 	function integersOnly(myfield, e) {
 		var key;
@@ -101,7 +107,7 @@
 					<%
 						}
 					%>
-					<li><a href="#">Contact</a></li>
+					<li><a class="fancybox" href="#contact">Contact</a></li>
 				</ul>
 			</div>
 			<!-- end of templatemo_menu -->
@@ -226,7 +232,13 @@
 				of Toronto</a> |
 		</div>
 		<!-- end of templatemo_footer -->
-
+		<div id = "contact" style="display: none;">
+		<h1>ECE1779 Group 4 Contacts</h1>
+		<p><a href="mailto:hewentao420@gmail.com">Jason He</a></p>
+		<p><a href="mailto:marcyliew@gmail.com">Marcy Liew</a></p>
+		<p><a href="mailto:zeyudavid.wang@mail.utoronto.ca">David Wang</a></p>
+		<p><a href="mailto:hzyxzhang@gmail.com">Henry Zhang</a></p>
+	</div>
 	</form>
 </body>
 <script type="text/javascript">

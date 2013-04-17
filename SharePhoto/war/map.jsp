@@ -24,12 +24,18 @@
 <script type="text/javascript" src="script/ajaxRequest.js"></script>
 <script src="js/jquery-1.9.1.js" type="text/javascript"></script>
 <script src="js/infobox.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/jquery.fancybox.pack.js"></script>
 <script language="javascript" type="text/javascript">
 	function clearText(field)
 	{
 	    if (field.defaultValue == field.value) field.value = '';
 	    else if (field.value == '') field.value = field.defaultValue;
 	}
+
+	$(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
 </script>
 <style type="text/css">
 #main {
@@ -75,7 +81,7 @@
 	            <ul>
 	                <li><a href="map.jsp" class="current">Home</a></li>
 	                <li><a href="addPhoto.jsp">Upload Photo</a></li>
-	                <li><a href="#">Contact</a></li>
+	                <li><a class="fancybox" href="#contact">Contact</a></li>
 	            </ul>    	
 	        </div> <!-- end of templatemo_menu -->
 
@@ -173,6 +179,13 @@
 		<div id="templatemo_footer">
             Copyright ECE1779 Group 4 | <a href="http://www.utoronto.ca">University of Toronto</a> | 
         </div> <!-- end of templatemo_footer -->
+	</div>
+	<div id = "contact" style="display: none;">
+		<h1>ECE1779 Group 4 Contacts</h1>
+		<p><a href="mailto:hewentao420@gmail.com">Jason He</a></p>
+		<p><a href="mailto:marcyliew@gmail.com">Marcy Liew</a></p>
+		<p><a href="mailto:zeyudavid.wang@mail.utoronto.ca">David Wang</a></p>
+		<p><a href="mailto:hzyxzhang@gmail.com">Henry Zhang</a></p>
 	</div>
 	<script type="text/javascript">
 		//search params
